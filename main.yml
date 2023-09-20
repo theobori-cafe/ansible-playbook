@@ -1,0 +1,42 @@
+---
+- hosts: all
+  roles:
+  - role: base
+
+  - role: security
+
+  - role: vitalk.secure-ssh
+    become: yes
+    ssh_user: "{{ ansible_ssh_user }}"
+    ssh_identity_key: "{{ ssh_identity_key_path }}"
+
+  - role: nickjj.docker
+    become: yes
+    tags: ["docker"]
+    docker__users: [
+      "{{ ansible_ssh_user }}"
+    ]
+    ignore_errors: yes
+
+  - role: weareinteractive.ufw
+    become: yes
+    ufw_enabled: true
+    ufw_packages: ["ufw"]
+    ufw_rules:
+      - logging: "full"
+      # - rule: allow
+      #   name: OpenSSH
+    ufw_manage_config: true
+    ufw_config:
+      IPV6: "yes"
+      DEFAULT_INPUT_POLICY: DROP
+      DEFAULT_OUTPUT_POLICY: ACCEPT
+      DEFAULT_FORWARD_POLICY: DROP
+      DEFAULT_APPLICATION_POLICY: SKIP
+      MANAGE_BUILTINS: "no"
+      IPT_SYSCTL: /etc/ufw/sysctl.conf
+      IPT_MODULES: ""
+
+  - role: shell
+
+  - role: profile

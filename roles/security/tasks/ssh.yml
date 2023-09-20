@@ -1,0 +1,6 @@
+- name: Override the SSH daemon configuration
+  ansible.builtin.shell: |
+    sed -i \
+      's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' \
+      /etc/ssh/sshd_config
+  become: yes
