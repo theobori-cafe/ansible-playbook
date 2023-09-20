@@ -1,0 +1,7 @@
+---
+roles:
+  - name: nickjj.docker
+  - name: weareinteractive.ufw
+    # Taken from GitHub because ansible galaxy servers dont have the latest version
+  - src: https://github.com/vitalk/ansible-secure-ssh
+    name: vitalk.secure-ssh

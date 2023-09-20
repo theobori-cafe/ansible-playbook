@@ -1,0 +1,44 @@
+# Taken from https://github.com/hashbang/shell-server/blob/797cec330b69fcc022581593aba42c0cd4641133/ansible/tasks/profile/main.yml#L97
+- name: Remove default /etc/skel directory
+  block:
+  - file: path=/etc/skel/.profile state=absent
+  - file: path=/etc/skel/.bash_logout state=absent
+  - file: path=/etc/skel/.bashrc state=absent
+  - file: path=/etc/skel/.kshrc state=absent
+  - file: path=/etc/skel/.mkshrc state=absent
+  become: yes
+
+- name: Override the useradd command configuration
+  ansible.builtin.shell: |
+    sed -i \
+      's/# SKEL/SKEL/' \
+      /etc/default/useradd
+  become: yes
+
+- name: Check if the config directory exists
+  ansible.builtin.stat:
+    path: /etc/skel/.config
+  register: config_dir
+
+- name: Ansible create the config directory if not exists
+  ansible.builtin.file:
+    path: /etc/skel/.config
+    state: directory
+    mode: 0755
+    recurse: yes
+  when: config_dir.stat.exists == false
+  become: yes
+
+- name: Copy the fish configuration directory
+  ansible.builtin.copy:
+    src: ../../common/files/fish
+    dest: /etc/skel/.config
+    force: yes
+  become: yes
+
+- name: Copy the tmux configuration file
+  ansible.builtin.copy:
+    src: ../../common/files/.tmux.conf
+    dest: /etc/skel/
+    force: yes
+  become: yes

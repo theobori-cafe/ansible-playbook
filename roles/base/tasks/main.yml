@@ -1,0 +1,13 @@
+- name: Install base packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  loop:
+    - curl
+    - sed
+    - apache2-utils
+    - sudo
+    - exa
+    - nginx
+    - libnginx-mod-stream
