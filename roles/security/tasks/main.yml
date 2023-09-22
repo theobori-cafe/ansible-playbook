@@ -1,4 +1,9 @@
-- include_tasks: gpg.yml
-- include_tasks: ssh.yml
-- include_tasks: fail2ban.yml
-- include_tasks: knockd.yml
+- name: Include task files
+  include_tasks: "{{ task_name }}.yml"
+  loop: 
+    - gpg
+    - ssh
+    - fail2ban
+    - knockd
+  loop_control:
+    loop_var: task_name

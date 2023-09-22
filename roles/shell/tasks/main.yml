@@ -1,2 +1,7 @@
-- include_tasks: tmux.yml
-- include_tasks: fish.yml
+- name: Include task files
+  include_tasks: "{{ task_name }}.yml"
+  loop: 
+    - tmux
+    - fish
+  loop_control:
+    loop_var: task_name

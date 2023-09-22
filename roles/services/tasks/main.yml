@@ -1,0 +1,67 @@
+- name: Check if the services directory exists
+  ansible.builtin.stat:
+    path: /usr/local/services
+  register: services_dir
+  become: yes
+
+- name: Ansible create the services directory if not exists
+  ansible.builtin.file:
+    path: /usr/local/services
+    state: directory
+    mode: 0755
+    recurse: yes
+  when: services_dir.stat.exists == false
+  become: yes
+
+- name: Copy the docker compose configuration files
+  block:
+    - ansible.builtin.template:
+        src: docker-compose.etherpad.yml.j2
+        dest: /usr/local/services/docker-compose.etherpad.yml
+
+    - ansible.builtin.copy:
+        src: "docker-compose.{{ service_name }}.yml"
+        dest: /usr/local/services
+      loop:
+        - proxitok
+        - searxng
+        - uptime-kuma
+      loop_control:
+        loop_var: service_name
+  become: yes
+
+- name: Install services
+  block:
+  - ansible.builtin.template:
+      src: proxitok.service.j2
+      dest: /etc/systemd/system/proxitok.service
+
+  - ansible.builtin.copy:
+      dest: "/etc/systemd/system/{{ service_name }}.service"
+      content: |
+        [Unit]
+        Description={{ service_name }} service
+        Requires=docker.service
+        After=docker.service
+
+        [Service]
+        Restart=on-failure
+
+        Environment=DOCKERCOMPOSEFILE=docker-compose.{{ service_name }}.yml
+        Environment=APP_URL='https://{{ fqdn }}'
+
+        WorkingDirectory=/usr/local/services
+        ExecStart=docker compose -f ${DOCKERCOMPOSEFILE} up --remove-orphans
+        ExecStop=docker compose -f ${DOCKERCOMPOSEFILE} down
+
+        [Install]
+        WantedBy=multi-user.target
+    loop:
+      - etherpad
+      - uptime-kuma
+      - searxng
+    loop_control:
+      loop_var: service_name
+  notify:
+    - Reload systemctl
+  become: yes
