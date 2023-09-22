@@ -69,3 +69,4 @@
           - search.{{ fqdn }}
 
   - role: services
+  - role: nginx
