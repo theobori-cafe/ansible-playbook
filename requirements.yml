@@ -5,3 +5,5 @@ roles:
     # Taken from GitHub because ansible galaxy servers dont have the latest version
   - src: https://github.com/vitalk/ansible-secure-ssh
     name: vitalk.secure-ssh
+  - src: https://github.com/geerlingguy/ansible-role-certbot.git
+    name: geerlingguy.certbot
