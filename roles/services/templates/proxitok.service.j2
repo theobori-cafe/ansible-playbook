@@ -10,8 +10,8 @@ Environment=DOCKERCOMPOSEFILE=docker-compose.proxitok.yml
 Environment=APP_URL='https://{{ fqdn }}'
 
 WorkingDirectory=/usr/local/services
-ExecStart=docker compose -f ${DOCKERCOMPOSEFILE} up --remove-orphans
-ExecStop=docker compose -f ${DOCKERCOMPOSEFILE} down
+ExecStart=docker compose -f ${DOCKERCOMPOSEFILE} up
+ExecStop=docker compose -f ${DOCKERCOMPOSEFILE} down --remove-orphans
 
 [Install]
 WantedBy=multi-user.target
