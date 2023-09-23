@@ -16,8 +16,13 @@
 - name: Copy the docker compose configuration files
   block:
     - ansible.builtin.template:
-        src: docker-compose.etherpad.yml.j2
-        dest: /usr/local/services/docker-compose.etherpad.yml
+        src: docker-compose.{{ service_name }}.yml.j2
+        dest: "/usr/local/services/docker-compose.{{ service_name }}.yml"
+      loop:
+        - etherpad
+        - joplin
+      loop_control:
+        loop_var: service_name
 
     - ansible.builtin.copy:
         src: "docker-compose.{{ service_name }}.yml"
@@ -48,11 +53,10 @@
         Restart=on-failure
 
         Environment=DOCKERCOMPOSEFILE=docker-compose.{{ service_name }}.yml
-        Environment=APP_URL='https://{{ fqdn }}'
 
         WorkingDirectory=/usr/local/services
-        ExecStart=docker compose -f ${DOCKERCOMPOSEFILE} up --remove-orphans
-        ExecStop=docker compose -f ${DOCKERCOMPOSEFILE} down
+        ExecStart=docker compose -f ${DOCKERCOMPOSEFILE} up
+        ExecStop=docker compose -f ${DOCKERCOMPOSEFILE} down --remove-orphans
 
         [Install]
         WantedBy=multi-user.target
@@ -60,6 +64,7 @@
       - etherpad
       - uptime-kuma
       - searxng
+      - joplin
     loop_control:
       loop_var: service_name
   notify:

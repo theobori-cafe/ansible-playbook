@@ -4,7 +4,7 @@
     state: present
   loop:
     - nginx
-    # - libnginx-mod-stream
+    - libnginx-mod-stream
   become: yes
 
 - name: Create NGINX mandatory directories
@@ -40,10 +40,10 @@
       server {
         listen 443 ssl http2;
         listen [::]:443 ssl http2;
-        server_name search.{{ fqdn }};
+        server_name {{ item.service_name }}.{{ fqdn }};
 
         ssl_certificate /etc/letsencrypt/live/{{ item.service_name }}.{{ fqdn }}/fullchain.pem;
-        ssl_certificate_key /etc/letsencrypt/live/search.{{ fqdn }}/privkey.pem;
+        ssl_certificate_key /etc/letsencrypt/live/{{ item.service_name }}.{{ fqdn }}/privkey.pem;
         ssl_session_timeout 5m;
 
         location / {
@@ -61,10 +61,11 @@
     - { service_name: 'etherpad', service_port: '9001' }
     - { service_name: 'search', service_port: '8080' }
     - { service_name: 'cringe', service_port: '8081' }
+    - { service_name: 'joplin', service_port: '22300' }
   become: yes
 
 # Special case
-- name: Install SearXNG NGINX configuration file
+- name: Install Uptime-Kuma NGINX configuration file
   ansible.builtin.copy:
     dest: "/etc/nginx/sites-available/status.{{ fqdn }}"
     content: |
@@ -114,6 +115,7 @@
     - search.{{ fqdn }}
     - cringe.{{ fqdn }}
     - status.{{ fqdn }}
+    - joplin.{{ fqdn }}
     - default
   loop_control:
     loop_var: service_name
