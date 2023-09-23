@@ -40,6 +40,26 @@
   - ansible.builtin.template:
       src: proxitok.service.j2
       dest: /etc/systemd/system/proxitok.service
+  
+  - ansible.builtin.copy:
+      dest: /etc/systemd/system/theoboricafe.service
+      content: |
+        [Unit]
+        Description=theobori.cafe website service
+        Requires=docker.service
+        After=docker.service
+
+        [Service]
+        Restart=on-failure
+
+        ExecStart=docker run \
+          -p 127.0.0.1:3000:3000 \
+          --name theoboricafe \
+          b0thr34l/theoboricafe
+        ExecStop=docker kill theoboricafe
+
+        [Install]
+        WantedBy=multi-user.target
 
   - ansible.builtin.copy:
       dest: "/etc/systemd/system/{{ service_name }}.service"
@@ -55,8 +75,12 @@
         Environment=DOCKERCOMPOSEFILE=docker-compose.{{ service_name }}.yml
 
         WorkingDirectory=/usr/local/services
-        ExecStart=docker compose -f ${DOCKERCOMPOSEFILE} up
-        ExecStop=docker compose -f ${DOCKERCOMPOSEFILE} down --remove-orphans
+        ExecStart=docker compose \
+          -f ${DOCKERCOMPOSEFILE} up
+        ExecStop=docker compose \
+          -f ${DOCKERCOMPOSEFILE} \
+          down \
+          --remove-orphans
 
         [Install]
         WantedBy=multi-user.target
