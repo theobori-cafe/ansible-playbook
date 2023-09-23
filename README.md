@@ -46,7 +46,9 @@ Roles:
 - **`base`**: Install basics needed packages for the other roles
 - **`profile`**: Setup some default configuration for new users
 - **`security`**: Setup system security tools/services like ssh, knockd, etc.
-- **`shell`**: Setup a shell environment with fish + tmux 
+- **`shell`**: Setup a shell environment with fish + tmux
+- **`services`**: Setup the Linux services
+- **`nginx`**: Setup NGINX for the differents services created from the **`services`** role
 
 Variables:
 - **`ssh_identity_key_path`**: SSH public key used to auth
@@ -54,3 +56,14 @@ Variables:
 - **`knockd_close_ssh_seq`**: knockd close SSH (should be encrypted)
 - **`knockd_tmp_open_ssh_seq`**: Temporary open SSH (should be encrypted)
 - **`knockd_opts`**: knockd CLI arguments used by the service
+- **`docker_hub_username`**: Docker Hub username
+- **`docker_hub_password`**: Docker Hub password
+- **`fqdn`**: The server FQDN
+- **`etherpad_db_user`**: Etherpad database username
+- **`etherpad_db_password`**: Etherpad database password
+- **`etherpad_admin_password`**: Etherpad admin password
+- **`joplin_db_user`**: Joplin database username
+- **`joplin_db_password`**: Joplin database password
+- **`joplin_mailer_host`**: SMTP host
+- **`joplin_mailer_user`**: Joplin mail service username
+- **`joplin_mailer_password`**: Joplin mail service password
