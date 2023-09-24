@@ -49,6 +49,7 @@ Roles:
 - **`shell`**: Setup a shell environment with fish + tmux
 - **`services`**: Setup the Linux services
 - **`nginx`**: Setup NGINX for the differents services created from the **`services`** role
+- **`tor`**: Setup a tor hidden service for every services
 
 Variables:
 - **`ssh_identity_key_path`**: SSH public key used to auth
@@ -67,3 +68,4 @@ Variables:
 - **`joplin_mailer_host`**: SMTP host
 - **`joplin_mailer_user`**: Joplin mail service username
 - **`joplin_mailer_password`**: Joplin mail service password
+- **`tor_unix_socket`**: Tor UNIX socket path
