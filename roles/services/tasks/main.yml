@@ -54,6 +54,7 @@
 
         ExecStart=docker run \
           -p 127.0.0.1:3000:3000 \
+          --rm \
           --name theoboricafe \
           b0thr34l/theoboricafe
         ExecStop=docker kill theoboricafe
