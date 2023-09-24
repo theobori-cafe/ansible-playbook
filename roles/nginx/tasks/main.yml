@@ -58,11 +58,11 @@
         }
       }
   with_items:
-    - { server_name: 'etherpad.theobori.cafe', service_port: '9001' }
-    - { server_name: 'search.theobori.cafe', service_port: '8080' }
-    - { server_name: 'cringe.theobori.cafe', service_port: '8081' }
-    - { server_name: 'joplin.theobori.cafe', service_port: '22300' }
-    - { server_name: 'theobori.cafe', service_port: '3000' }
+    - { server_name: "etherpad.{{ fqdn }}", service_port: "9001" }
+    - { server_name: "search.{{ fqdn }}", service_port: "8080" }
+    - { server_name: "cringe.{{ fqdn }}", service_port: "8081" }
+    - { server_name: "joplin.{{ fqdn }}", service_port: "22300" }
+    - { server_name: "{{ fqdn }}", service_port: "3000" }
   become: yes
 
 # Special case

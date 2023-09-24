@@ -1,0 +1,1 @@
+tor_unix_socket: unix:/var/run/{{ fqdn }}.sock

@@ -78,3 +78,5 @@
   - role: services
 
   - role: nginx
+
+  - role: tor
