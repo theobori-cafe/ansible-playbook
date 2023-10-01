@@ -33,6 +33,23 @@
       - rule: allow
         to_port: '80'
       - rule: allow
+        to_port: '25'
+      - rule: allow
+        to_port: '110'
+      - rule: allow
+        to_port: '143'
+      - rule: allow
+        to_port: '465'
+      - rule: allow
+        to_port: '587'
+      - rule: allow
+        to_port: '993'
+      - rule: allow
+        to_port: '995'
+      - rule: allow
+        to_port: '4190/tcp'      
+      # Delete this default rule
+      - rule: allow
         name: Anywhere
         delete: true
     ufw_manage_config: true

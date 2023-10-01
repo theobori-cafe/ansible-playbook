@@ -1,0 +1,40 @@
+- name: Check if the mailcow-dockerized configuration directory exists
+  ansible.builtin.stat:
+    path: /usr/local/services/mailcow-dockerized
+  register: mailcow_dockerized_dir
+
+- name: Git clone mailcow-dockerized
+  ansible.builtin.git:
+    repo: https://github.com/mailcow/mailcow-dockerized
+    dest: /usr/local/services/mailcow-dockerized
+    version: master
+  when: mailcow_dockerized_dir.stat.exists == false
+  become: yes
+
+- name: Install the mailcow service
+  ansible.builtin.copy:
+    dest: "/etc/systemd/system/mailcow.service"
+    content: |
+      [Unit]
+      Description=mailcow service
+      Requires=docker.service
+      After=docker.service
+
+      [Service]
+      Restart=on-failure
+
+      Environment=DOCKERCOMPOSEFILE=docker-compose.yml
+
+      WorkingDirectory=/usr/local/services/mailcow-dockerized
+
+      ExecStart=docker compose \
+        -f ${DOCKERCOMPOSEFILE} up
+
+      ExecStop=docker compose \
+        -f ${DOCKERCOMPOSEFILE} \
+        down \
+        --remove-orphans
+
+      [Install]
+      WantedBy=multi-user.target
+  become: yes
