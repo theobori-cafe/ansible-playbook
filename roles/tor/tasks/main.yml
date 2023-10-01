@@ -87,17 +87,3 @@
     - { service_name: "joplin.{{ fqdn }}", service_port: "22300" }
     - { service_name: "status.{{ fqdn }}", service_port: "3001" }
   become: yes
-
-- name: Update NGINX configuration to support tor server_names
-  ansible.builtin.shell: |
-    sed -i \
-      -e "s/# server_names_hash_bucket_size 64/server_names_hash_bucket_size 128/" \
-      /etc/nginx/nginx.conf
-  become: yes
-
-- name: Restart service NGINX
-  ansible.builtin.service:
-    name: nginx
-    state: restarted
-    enabled: yes
-  become: yes

@@ -27,6 +27,14 @@ ansible-playbook \
    main.yml
 ```
 
+Some services are not restarted at runtime on purpose, because they need administrator configuration like `Uptime-Kuma` or `Joplin`. If you want to access them, you should do a SSH bridge with OpenSSH.
+
+```sh
+ssh \
+   -L ssh_local_port:127.0.0.1:ssh_remote_port -N \
+   -f ssh_user@ssh_server
+```
+
 ## ⚠️ knockd risks
 
 In this configuration, we are using `knockd` to manage the openSSH firewall (`ufw`) rules. It can be very risky. If you want to be safe you can exclude the `knockd` task by commenting the following line in [roles/security/tasks/main.yml](roles/security/tasks/main.yml):
@@ -53,6 +61,7 @@ Roles:
 
 Variables:
 - **`ssh_identity_key_path`**: SSH public key used to auth
+- **`ssh_port`**: Change the default SSH port
 - **`knockd_open_ssh_seq`**: Knockd open SSH (should be encrypted)
 - **`knockd_close_ssh_seq`**: knockd close SSH (should be encrypted)
 - **`knockd_tmp_open_ssh_seq`**: Temporary open SSH (should be encrypted)
