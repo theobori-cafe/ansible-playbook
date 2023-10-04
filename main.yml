@@ -47,7 +47,8 @@
       - rule: allow
         to_port: '995'
       - rule: allow
-        to_port: '4190/tcp'      
+        to_port: '4190'
+        proto: tcp      
       # Delete this default rule
       - rule: allow
         name: Anywhere
@@ -81,6 +82,8 @@
     certbot_certs:
       - domains:
         - joplin.{{ fqdn }}
+      - domains:
+        - mail.{{ fqdn }}
       - domains:
         - cringe.{{ fqdn }}
       - domains:

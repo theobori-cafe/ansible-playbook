@@ -74,6 +74,7 @@
     - { server_name: "search.{{ fqdn }}", service_port: "8080" }
     - { server_name: "cringe.{{ fqdn }}", service_port: "8081" }
     - { server_name: "joplin.{{ fqdn }}", service_port: "22300" }
+    - { server_name: "mail.{{ fqdn }}", service_port: "8181" }
     - { server_name: "{{ fqdn }}", service_port: "3000" }
   become: yes
 
@@ -135,6 +136,7 @@
     - cringe.{{ fqdn }}
     - status.{{ fqdn }}
     - joplin.{{ fqdn }}
+    - mail.{{ fqdn }}
     - "{{ fqdn }}"
     - default
   loop_control:
