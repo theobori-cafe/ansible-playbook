@@ -15,9 +15,18 @@
 
 - name: Copy the docker compose configuration files
   block:
+    - ansible.builtin.file: 
+        path: "/usr/local/services/{{ service_name }}"
+        state: directory
+      loop:
+        - etherpad
+        - joplin
+      loop_control:
+        loop_var: service_name
+  
     - ansible.builtin.template:
-        src: docker-compose.{{ service_name }}.yml.j2
-        dest: "/usr/local/services/docker-compose.{{ service_name }}.yml"
+        src: "{{ service_name }}/docker-compose.yml.j2"
+        dest: "/usr/local/services/{{ service_name }}/docker-compose.yml"
       loop:
         - etherpad
         - joplin
@@ -25,8 +34,8 @@
         loop_var: service_name
 
     - ansible.builtin.copy:
-        src: "docker-compose.{{ service_name }}.yml"
-        dest: /usr/local/services
+        src: "{{ service_name }}"
+        dest: "/usr/local/services/"
       loop:
         - proxitok
         - searxng
@@ -74,18 +83,11 @@
         [Service]
         Restart=on-failure
 
-        Environment=DOCKERCOMPOSEFILE=docker-compose.{{ service_name }}.yml
-
-        WorkingDirectory=/usr/local/services
+        WorkingDirectory=/usr/local/services/{{ service_name }}
   
-        ExecStart=docker compose \
-          -f ${DOCKERCOMPOSEFILE} up
+        ExecStart=docker compose up
+        ExecStop=docker compose down --remove-orphans
   
-        ExecStop=docker compose \
-          -f ${DOCKERCOMPOSEFILE} \
-          down \
-          --remove-orphans
-
         [Install]
         WantedBy=multi-user.target
     loop:
