@@ -8,6 +8,7 @@ services:
       - "127.0.0.1:3001:3001"
     volumes:
       - uptime-kuma:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
     network_mode: host
 
 volumes:
