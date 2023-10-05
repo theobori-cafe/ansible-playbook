@@ -15,7 +15,7 @@ services:
       DEFAULT_PAD_TEXT: {{ fqdn }} notepad
       TITLE: {{ fqdn }}
       ADMIN_PASSWORD: {{ etherpad_admin_password }}
-    image: etherpad/etherpad
+    image: etherpad/etherpad:1.8.17
     
   db:
     image: postgres:11-alpine
