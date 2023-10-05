@@ -6,12 +6,11 @@ After=docker.service
 [Service]
 Restart=on-failure
 
-Environment=DOCKERCOMPOSEFILE=docker-compose.proxitok.yml
 Environment=APP_URL='https://{{ fqdn }}'
 
-WorkingDirectory=/usr/local/services
-ExecStart=docker compose -f ${DOCKERCOMPOSEFILE} up
-ExecStop=docker compose -f ${DOCKERCOMPOSEFILE} down --remove-orphans
+WorkingDirectory=/usr/local/services/proxitok
+ExecStart=docker compose up
+ExecStop=docker compose down --remove-orphans
 
 [Install]
 WantedBy=multi-user.target
