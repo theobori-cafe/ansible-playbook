@@ -23,17 +23,11 @@
       [Service]
       Restart=on-failure
 
-      Environment=DOCKERCOMPOSEFILE=docker-compose.yml
-
       WorkingDirectory=/usr/local/services/mailcow-dockerized
 
-      ExecStart=docker compose \
-        -f ${DOCKERCOMPOSEFILE} up
+      ExecStart=docker compose up
 
-      ExecStop=docker compose \
-        -f ${DOCKERCOMPOSEFILE} \
-        down \
-        --remove-orphans
+      ExecStop=docker compose down --remove-orphans
 
       [Install]
       WantedBy=multi-user.target
