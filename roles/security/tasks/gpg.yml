@@ -2,13 +2,3 @@
   ansible.builtin.package:
     name: gnupg
     state: present
-  become: yes
-
-- name: Copy the GnuPG configuration file
-  ansible.builtin.copy:
-    src: .gnupg
-    dest: /home/{{ ansible_ssh_user }}/.gnupg
-    owner: "{{ ansible_ssh_user }}"
-    group: "{{ ansible_ssh_user }}"
-    force: yes
-  become_user: "{{ ansible_ssh_user }}"

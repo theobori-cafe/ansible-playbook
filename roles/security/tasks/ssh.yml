@@ -7,10 +7,8 @@
       -e 's/#LogLevel/LogLevel/' \
       -e 's/#PubkeyAuthentication/PubkeyAuthentication/' \
       /etc/ssh/sshd_config
-  become: yes
 
 - name: Restart service ssh
   ansible.builtin.service:
     name: ssh
     state: restarted
-  become: yes

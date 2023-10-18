@@ -2,13 +2,11 @@
   ansible.builtin.package:
     name: knockd
     state: present
-  become: yes
 
 - name: Copy the knockd configuration file
   ansible.builtin.template:
     src: knockd.conf.j2
     dest: /etc/knockd.conf
-  become: yes
 
 - name: Override the knockd additionnal default configuration file
   ansible.builtin.shell: |
@@ -16,11 +14,9 @@
       -e "s/^#KNOCKD_OPTS=\"-i eth1\"/KNOCKD_OPTS=\"{{ knockd_opts }}\"/" \
       -e "s/^START_KNOCKD=0/START_KNOCKD=1/" \
       /etc/default/knockd
-  become: yes
 
 - name: Restart service knockd
   ansible.builtin.service:
     name: knockd
     state: restarted
     enabled: yes
-  become: yes

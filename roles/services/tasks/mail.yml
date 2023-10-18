@@ -9,7 +9,6 @@
     dest: /usr/local/services/mailcow-dockerized
     version: master
   when: mailcow_dockerized_dir.stat.exists == false
-  become: yes
 
 - name: Install the mailcow service
   ansible.builtin.copy:
@@ -31,4 +30,3 @@
 
       [Install]
       WantedBy=multi-user.target
-  become: yes
