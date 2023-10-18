@@ -2,7 +2,6 @@
   ansible.builtin.package:
     name: tor
     state: present
-  become: yes
 
 - name: Filling Tor configuration file (torrc)
   ansible.builtin.blockinfile: 
@@ -12,20 +11,17 @@
     content: |
       HiddenServiceDir /var/lib/tor/{{ fqdn }}/
       HiddenServicePort 80 {{ tor_unix_socket }}
-  become: yes
 
 - name: Restart service Tor
   ansible.builtin.service:
     name: tor
     state: restarted
     enabled: yes
-  become: yes
 
 - name: Store the Tor hostname
   ansible.builtin.shell: |
     cat /var/lib/tor/{{ fqdn }}/hostname
   register: tor_hostname
-  become: yes
 
 - name: Display the Tor hostname
   ansible.builtin.debug:
@@ -40,6 +36,7 @@
     content: |
       server {
         listen {{ tor_unix_socket }};
+
         access_log /var/log/nginx/{{ fqdn }}.log;
 
         server_name {{ tor_hostname.stdout }};
@@ -54,7 +51,6 @@
           proxy_redirect off;
         }
       }
-  become: yes
 
 - name: Configure NGINX for Tor hidden servives (subdomains)
   ansible.builtin.blockinfile: 
@@ -84,6 +80,6 @@
     - { service_name: "etherpad.{{ fqdn }}", service_port: "9001" }
     - { service_name: "search.{{ fqdn }}", service_port: "8080" }
     - { service_name: "cringe.{{ fqdn }}", service_port: "8081" }
-    - { service_name: "joplin.{{ fqdn }}", service_port: "22300" }
     - { service_name: "status.{{ fqdn }}", service_port: "3001" }
-  become: yes
+    - { service_name: "mail.{{ fqdn }}", service_port: "8181" }
+    - { service_name: "cloud.{{ fqdn }}", service_port: "11000" }

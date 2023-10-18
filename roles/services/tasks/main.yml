@@ -1,6 +1,7 @@
 - name: Include task files
   include_tasks: "{{ task_name }}.yml"
   loop:
+    - base
     - services
     - mail
   loop_control:

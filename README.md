@@ -27,7 +27,7 @@ ansible-playbook \
    main.yml
 ```
 
-Some services are not restarted at runtime on purpose, because they need administrator configuration like `Uptime-Kuma` or `Joplin`. If you want to access them, you should do a SSH bridge with OpenSSH.
+Some services are not restarted at runtime on purpose, because they need administrator configuration like `Uptime-Kuma` or `Nextcloud`. If you want to access them, you should do a SSH bridge with OpenSSH.
 
 ```sh
 ssh \
@@ -68,13 +68,12 @@ Variables:
 - **`knockd_opts`**: knockd CLI arguments used by the service
 - **`docker_hub_username`**: Docker Hub username
 - **`docker_hub_password`**: Docker Hub password
-- **`fqdn`**: The server FQDN
+- **`fqdn`**: The server FQDN, must be "domain.tld"
 - **`etherpad_db_user`**: Etherpad database username
 - **`etherpad_db_password`**: Etherpad database password
 - **`etherpad_admin_password`**: Etherpad admin password
-- **`joplin_db_user`**: Joplin database username
-- **`joplin_db_password`**: Joplin database password
-- **`joplin_mailer_host`**: SMTP host
-- **`joplin_mailer_user`**: Joplin mail service username
-- **`joplin_mailer_password`**: Joplin mail service password
 - **`tor_unix_socket`**: Tor UNIX socket path
+- **`ldap_admin_password`**: OpenLDAP administrator password
+- **`nextcloud_db_user`**: Nextcloud database user
+- **`nextcloud_db_password`**: Nextcloud database password
+- **`nextcloud_db_root_password`**: Nextcloud database root password

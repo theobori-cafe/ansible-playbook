@@ -1,18 +1,3 @@
-- name: Check if the services directory exists
-  ansible.builtin.stat:
-    path: /usr/local/services
-  register: services_dir
-  become: yes
-
-- name: Ansible create the services directory if not exists
-  ansible.builtin.file:
-    path: /usr/local/services
-    state: directory
-    mode: 0755
-    recurse: yes
-  when: services_dir.stat.exists == false
-  become: yes
-
 - name: Copy the docker compose configuration files
   block:
     - ansible.builtin.file: 
@@ -20,7 +5,8 @@
         state: directory
       loop:
         - etherpad
-        - joplin
+        - ldap
+        - nextcloud
       loop_control:
         loop_var: service_name
   
@@ -29,7 +15,8 @@
         dest: "/usr/local/services/{{ service_name }}/docker-compose.yml"
       loop:
         - etherpad
-        - joplin
+        - ldap
+        - nextcloud
       loop_control:
         loop_var: service_name
 
@@ -42,7 +29,6 @@
         - uptime-kuma
       loop_control:
         loop_var: service_name
-  become: yes
 
 - name: Install services
   block:
@@ -94,9 +80,9 @@
       - etherpad
       - uptime-kuma
       - searxng
-      - joplin
+      - nextcloud
+      - ldap
     loop_control:
       loop_var: service_name
   notify:
     - Reload systemctl
-  become: yes

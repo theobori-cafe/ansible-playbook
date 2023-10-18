@@ -1,0 +1,12 @@
+- name: Check if the services directory exists
+  ansible.builtin.stat:
+    path: /usr/local/services
+  register: services_dir
+
+- name: Ansible create the services directory if not exists
+  ansible.builtin.file:
+    path: /usr/local/services
+    state: directory
+    mode: 0755
+    recurse: yes
+  when: services_dir.stat.exists == false

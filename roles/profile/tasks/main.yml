@@ -6,14 +6,12 @@
   - file: path=/etc/skel/.bashrc state=absent
   - file: path=/etc/skel/.kshrc state=absent
   - file: path=/etc/skel/.mkshrc state=absent
-  become: yes
 
 - name: Override the useradd command configuration
   ansible.builtin.shell: |
     sed -i \
       's/# SKEL/SKEL/' \
       /etc/default/useradd
-  become: yes
 
 - name: Check if the config directory exists
   ansible.builtin.stat:
@@ -27,18 +25,15 @@
     mode: 0755
     recurse: yes
   when: config_dir.stat.exists == false
-  become: yes
 
 - name: Copy the fish configuration directory
   ansible.builtin.copy:
     src: ../../common/files/fish
     dest: /etc/skel/.config
     force: yes
-  become: yes
 
 - name: Copy the tmux configuration file
   ansible.builtin.copy:
     src: ../../common/files/.tmux.conf
     dest: /etc/skel/
     force: yes
-  become: yes

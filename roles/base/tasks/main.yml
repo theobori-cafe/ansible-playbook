@@ -1,18 +1,15 @@
 - name: Update
   ansible.builtin.apt:
     update_cache: yes
-  become: yes
 
 - name: Upgrade
   ansible.builtin.apt:
     upgrade: safe
-  become: yes
 
 - name: Install base packages
   ansible.builtin.package:
     name: "{{ item }}"
     state: present
-  become: yes
   loop:
     - curl
     - sed
