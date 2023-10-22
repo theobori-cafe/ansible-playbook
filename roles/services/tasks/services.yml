@@ -48,7 +48,7 @@
         Restart=on-failure
 
         ExecStart=docker run \
-          -p 127.0.0.1:3000:3000 \
+          -p 127.0.0.1:3000:8080 \
           --rm \
           --name theoboricafe \
           b0thr34l/theoboricafe
