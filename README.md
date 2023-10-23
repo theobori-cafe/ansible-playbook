@@ -55,7 +55,7 @@ Roles:
 - **`profile`**: Setup some default configuration for new users
 - **`security`**: Setup system security tools/services like ssh, knockd, etc.
 - **`shell`**: Setup a shell environment with fish + tmux
-- **`services`**: Setup the Linux services
+- **`services`**: Setup the Systemd services
 - **`nginx`**: Setup NGINX for the differents services created from the **`services`** role
 - **`tor`**: Setup a tor hidden service for every services
 
