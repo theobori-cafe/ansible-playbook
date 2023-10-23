@@ -4,4 +4,5 @@ ssl_stapling on;
 ssl_stapling_verify on;
 ssl_trusted_certificate /etc/letsencrypt/live/{{ fqdn }}/fullchain.pem;
 
+resolver_timeout 5s;
 resolver 1.1.1.1;

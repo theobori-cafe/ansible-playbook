@@ -8,6 +8,14 @@ server {
   
   add_header Strict-Transport-Security "max-age=63072000" always;
 
+  location = /.well-known/carddav {
+    return 301 $scheme://$host/remote.php/dav;
+  }
+
+  location = /.well-known/caldav {
+    return 301 $scheme://$host/remote.php/dav;
+  }
+
   location / {
     include proxy_params;
     proxy_pass http://localhost:{{ item.port }}/;
