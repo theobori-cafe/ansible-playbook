@@ -10,7 +10,7 @@ server {
   sub_filter Fg4i6piWbxQWdgGv66UX1V1B5zwNWL4Om8vSTS4QG4I $ssl_session_id;
   
   include header_params;
-  add_header Content-Security-Policy "default-src 'none'; font-src 'self'; style-src 'self'; media-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'; style-src-elem 'self' 'nonce-$ssl_session_id'; img-src 'self'; script-src 'self' 'unsafe-hashes' 'sha256-2daR3BDHUgNt2bWp/u+3CNDJtsIDrpz+22+QPnNNS5c='; connect-src 'self'";
+  add_header Content-Security-Policy "default-src 'none'; font-src 'self'; style-src 'self'; media-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'; style-src-elem 'self' 'nonce-$ssl_session_id'; img-src 'self' https:; script-src 'self' 'unsafe-hashes' 'sha256-2daR3BDHUgNt2bWp/u+3CNDJtsIDrpz+22+QPnNNS5c='; connect-src 'self'";
 
   location / {
     include proxy_params;
