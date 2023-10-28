@@ -1,64 +1,55 @@
+- name: Ansible create the services directory if not exists
+  ansible.builtin.file:
+    path: /usr/local/services
+    state: directory
+    mode: 0755
+
 - name: Copy the docker compose configuration files
   block:
-    - ansible.builtin.file: 
-        path: "/usr/local/services/{{ service_name }}"
-        state: directory
-      loop:
-        - etherpad
-        - ldap
-        - nextcloud
-      loop_control:
-        loop_var: service_name
-  
-    - ansible.builtin.template:
-        src: "{{ service_name }}/docker-compose.yml.j2"
-        dest: "/usr/local/services/{{ service_name }}/docker-compose.yml"
-      loop:
-        - etherpad
-        - ldap
-        - nextcloud
-      loop_control:
-        loop_var: service_name
-
-    - ansible.builtin.copy:
+    - name: Copy services descriptive deployment files (docker-compose, etc.)
+      ansible.builtin.copy:
         src: "{{ service_name }}"
         dest: "/usr/local/services/"
       loop:
         - proxitok
         - searxng
         - uptime-kuma
+        - etherpad
+        - ldap
+        - nextcloud
+        - tt-rss
+        - theoboricafe
       loop_control:
         loop_var: service_name
 
+    - name: Copy services environment files
+      ansible.builtin.template:
+          src: "{{ service_name }}/.env.j2"
+          dest: "/usr/local/services/{{ service_name }}/.env"
+          mode: 0640
+      loop:
+        - etherpad
+        - ldap
+        - nextcloud
+        - tt-rss
+      loop_control:
+        loop_var: service_name
+
+- name: Create the tt-rss config.d directory if not exists
+  ansible.builtin.file:
+    path: /usr/local/services/tt-rss/config.d
+    state: directory
+    mode: 0755
+
+- name: Copy the LDAP configuration PHP file
+  ansible.builtin.template:
+    src: tt-rss/config.d/ldap.php.j2
+    dest: /usr/local/services/tt-rss/config.d/ldap.php
+
 - name: Install services
-  block:
-  - ansible.builtin.template:
-      src: proxitok.service.j2
-      dest: /etc/systemd/system/proxitok.service
-  
-  - ansible.builtin.copy:
-      dest: /etc/systemd/system/theoboricafe.service
-      content: |
-        [Unit]
-        Description=theobori.cafe website service
-        Requires=docker.service
-        After=docker.service
-
-        [Service]
-        Restart=on-failure
-
-        ExecStart=docker run \
-          -p 127.0.0.1:3000:8080 \
-          --rm \
-          --name theoboricafe \
-          b0thr34l/theoboricafe
-
-        ExecStop=docker kill theoboricafe
-
-        [Install]
-        WantedBy=multi-user.target
-
-  - ansible.builtin.copy:
+  block: 
+  - name: Create systemd services
+    ansible.builtin.copy:
       dest: "/etc/systemd/system/{{ service_name }}.service"
       content: |
         [Unit]
@@ -71,7 +62,7 @@
 
         WorkingDirectory=/usr/local/services/{{ service_name }}
   
-        ExecStart=docker compose up
+        ExecStart=docker compose up --build
         ExecStop=docker compose down --remove-orphans
   
         [Install]
@@ -82,6 +73,9 @@
       - searxng
       - nextcloud
       - ldap
+      - proxitok
+      - tt-rss
+      - theoboricafe
     loop_control:
       loop_var: service_name
   notify:

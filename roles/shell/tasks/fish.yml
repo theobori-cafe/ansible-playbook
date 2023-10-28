@@ -3,18 +3,12 @@
     name: fish
     state: present
 
-- name: Check if the fish configuration directory exists
-  ansible.builtin.stat:
-    path: $HOME/.config/fish
-  register: fish_home_dir
-
 - name: Ansible create directory the fish configuration directory if not exists
   ansible.builtin.file:
     path: $HOME/.config/fish
     state: directory
     mode: 0755
     recurse: yes
-  when: fish_home_dir.stat.exists == false
 
 - name: Copy the fish configuration directory
   ansible.builtin.copy:

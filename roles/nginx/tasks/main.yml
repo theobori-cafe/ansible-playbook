@@ -8,28 +8,14 @@
 
 - name: Create NGINX mandatory directories
   block:
-    - ansible.builtin.stat:
-        path: /etc/nginx/sites-available/
-      register: dir_exists
-    
     - ansible.builtin.file:
-        path: /etc/nginx/sites-available/
+        path: " {{ item }}"
         state: directory
         mode: 0755
-        recurse: yes
-      when: dir_exists.stat.exists == false
+      loop:
+        - /etc/nginx/sites-available/
+        - /etc/nginx/sites-enabled/
     
-    - ansible.builtin.stat:
-        path: /etc/nginx/sites-enabled/
-      register: dir_exists
-    
-    - ansible.builtin.file:
-        path: /etc/nginx/sites-enabled/
-        state: directory
-        mode: 0755
-        recurse: yes
-      when: dir_exists.stat.exists == false
-
 - name: Copy the global NGINX configuration
   ansible.builtin.copy:
     src: nginx-conf/
@@ -51,6 +37,7 @@
     - { filename: "mail", name: "mail.{{ fqdn }}", port: "8181" }
     - { filename: "status", name: "status.{{ fqdn }}", port: "3001" }
     - { filename: "cloud", name: "cloud.{{ fqdn }}", port: "8000" }
+    - { filename: "tt-rss", name: "news.{{ fqdn }}", port: "8280" }
     - { filename: "website", name: "{{ fqdn }}", port: "3000" }
 
 - name: Install the default NGINX configuration file
@@ -78,6 +65,7 @@
     - status.{{ fqdn }}
     - mail.{{ fqdn }}
     - cloud.{{ fqdn }}
+    - news.{{ fqdn }}
     - "{{ fqdn }}"
     - default
   loop_control:

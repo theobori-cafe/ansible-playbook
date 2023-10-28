@@ -1,0 +1,20 @@
+<?php
+
+define('PLUGINS', 'auth_ldap, auth_internal, note');
+
+define('LDAP_AUTH_SERVER_URI', 'ldap://ldap-service:389');
+define('LDAP_AUTH_USETLS', FALSE); // Enable StartTLS Support for ldap://
+define('LDAP_AUTH_ALLOW_UNTRUSTED_CERT', TRUE); // Allows untrusted certificate
+define('LDAP_AUTH_BASEDN', '{{ ldap_auth_services_basedn }}');
+define('LDAP_AUTH_ANONYMOUSBEFOREBIND', FALSE);
+define('LDAP_AUTH_SEARCHFILTER', '(&(|(objectclass=inetOrgPerson))(|(cn=???)(|(mailPrimaryAddress=???)(mail=???))(|(cn=???)(mail=???))))');
+
+define('LDAP_AUTH_BINDDN', '{{ ldap_auth_services_binddn }}');
+define('LDAP_AUTH_BINDPW', '{{ ldap_auth_services_bindpw }}');
+define('LDAP_AUTH_LOGIN_ATTRIB', '{{ ldap_auth_services_login_attrib }}');
+define('LDAP_AUTH_LOG_ATTEMPTS', TRUE);
+
+define('LDAP_AUTH_DEBUG', TRUE);
+define('AUTH_AUTO_CREATE', TRUE);
+
+putenv('TTRSS_SELF_URL_PATH=https://news.{{ fqdn }}/tt-rss/');

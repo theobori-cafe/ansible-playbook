@@ -3,18 +3,12 @@
     name: tmux
     state: present
   
-# - name: Check if the tmux directory exists
-#   ansible.builtin.stat:
-#     path: $HOME/.tmux/plugins
-#   register: tmux_dir
-
 # - name: Ansible create the tmux directory if not exists
 #   ansible.builtin.file:
 #     path: $HOME/.tmux/plugins
 #     state: directory
 #     mode: 0755
 #     recurse: yes
-#   when: tmux_dir.stat.exists == false
 
 # - name: Cloning the Tmux Plugin Manager repository
 #   ansible.builtin.git:
