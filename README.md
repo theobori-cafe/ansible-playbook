@@ -77,3 +77,4 @@ Variables:
 - **`nextcloud_db_user`**: Nextcloud database user
 - **`nextcloud_db_password`**: Nextcloud database password
 - **`nextcloud_db_root_password`**: Nextcloud database root password
+- **`nextcloud_redis_password`**: Nextcloud Redis password

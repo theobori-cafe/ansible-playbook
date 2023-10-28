@@ -4,11 +4,10 @@ services:
   ldap-service:
     image: osixia/openldap:1.5.0
     container_name: ldap-service
+    env_file:
+      - .env
     environment:
       LDAP_ORGANISATION: "Theo BORI Cafe"
-      LDAP_BASE_DN: "dc={{ fqdn | split('.') | first }},dc={{ fqdn | split('.') | last }}"
-      LDAP_DOMAIN: "{{ fqdn }}"
-      LDAP_ADMIN_PASSWORD: "{{ ldap_admin_password }}"
     volumes:
       - slapd_db:/var/lib/ldap
       - slapd_config:/etc/ldap/slapd.d

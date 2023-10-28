@@ -15,10 +15,6 @@
     docker__users: [
       "{{ ansible_ssh_user }}"
     ]
-    docker__registries:
-      - registry_url: "https://index.docker.io/v1/"
-        username: "{{ docker_hub_username }}"
-        password: "{{ docker_hub_password }}"
     ignore_errors: yes
 
   - role: weareinteractive.ufw
@@ -79,6 +75,8 @@
     certbot_certs:
       - domains:
         - mail.{{ fqdn }}
+      - domains:
+        - news.{{ fqdn }}
       - domains:
         - cringe.{{ fqdn }}
       - domains:

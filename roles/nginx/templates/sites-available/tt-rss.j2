@@ -1,0 +1,16 @@
+server {
+  include listen-443;
+  server_name {{ item.name }}
+  
+  include ssl_params;
+  ssl_certificate /etc/letsencrypt/live/{{ item.name }}/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/{{ item.name }}/privkey.pem;
+  
+  include header_params;
+  proxy_set_header X-Forwarded-Proto $scheme;
+
+  location / {
+    include proxy_params;
+    proxy_pass http://localhost:{{ item.port }}/;
+  }
+}

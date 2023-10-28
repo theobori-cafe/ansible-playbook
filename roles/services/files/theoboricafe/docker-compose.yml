@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  website:
+    image: theoboricafe/website:1.0
+    container_name: theoboricafe
+    build:
+      dockerfile: Dockerfile
+      context: https://github.com/theobori-cafe/theobori.cafe.git
+    ports:
+      - 127.0.0.1:3000:8080
+    restart: unless-stopped
