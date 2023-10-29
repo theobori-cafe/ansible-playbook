@@ -4,36 +4,34 @@
     state: directory
     mode: 0755
 
-- name: Copy the docker compose configuration files
-  block:
-    - name: Copy services descriptive deployment files (docker-compose, etc.)
-      ansible.builtin.copy:
-        src: "{{ service_name }}"
-        dest: "/usr/local/services/"
-      loop:
-        - proxitok
-        - searxng
-        - uptime-kuma
-        - etherpad
-        - ldap
-        - nextcloud
-        - tt-rss
-        - theoboricafe
-      loop_control:
-        loop_var: service_name
+- name: Copy the docker compose files
+  ansible.builtin.copy:
+    src: "{{ service_name }}"
+    dest: "/usr/local/services/"
+  loop:
+    - proxitok
+    - searxng
+    - uptime-kuma
+    - etherpad
+    - ldap
+    - nextcloud
+    - tt-rss
+    - theoboricafe
+  loop_control:
+    loop_var: service_name
 
-    - name: Copy services environment files
-      ansible.builtin.template:
-          src: "{{ service_name }}/.env.j2"
-          dest: "/usr/local/services/{{ service_name }}/.env"
-          mode: 0640
-      loop:
-        - etherpad
-        - ldap
-        - nextcloud
-        - tt-rss
-      loop_control:
-        loop_var: service_name
+- name: Copy services environment files
+  ansible.builtin.template:
+      src: "{{ service_name }}/.env.j2"
+      dest: "/usr/local/services/{{ service_name }}/.env"
+      mode: 0640
+  loop:
+    - etherpad
+    - ldap
+    - nextcloud
+    - tt-rss
+  loop_control:
+    loop_var: service_name
 
 - name: Create the tt-rss config.d directory if not exists
   ansible.builtin.file:
