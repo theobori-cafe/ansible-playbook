@@ -7,15 +7,14 @@
     - libnginx-mod-stream
 
 - name: Create NGINX mandatory directories
-  block:
-    - ansible.builtin.file:
-        path: " {{ item }}"
-        state: directory
-        mode: 0755
-      loop:
-        - /etc/nginx/sites-available/
-        - /etc/nginx/sites-enabled/
-    
+  ansible.builtin.file:
+    path: " {{ item }}"
+    state: directory
+    mode: 0755
+  loop:
+    - /etc/nginx/sites-available/
+    - /etc/nginx/sites-enabled/
+
 - name: Copy the global NGINX configuration
   ansible.builtin.copy:
     src: nginx-conf/
