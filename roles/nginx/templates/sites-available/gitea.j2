@@ -1,0 +1,22 @@
+server {
+  include listen-443;
+  server_name {{ item.name }}
+  
+  include ssl_params;
+  ssl_certificate /etc/letsencrypt/live/{{ item.name }}/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/{{ item.name }}/privkey.pem;
+  
+  add_header Content-Security-Policy "default-src 'none'; connect-src 'self'; manifest-src 'self' data:; style-src 'self' 'unsafe-inline'; style-src-elem 'self'; script-src-elem 'self' 'unsafe-inline'; font-src data:; form-action 'self'; img-src 'self' data: https:; script-src 'self'; worker-src 'self'";
+  add_header Strict-Transport-Security "max-age=63072000" always;
+  add_header X-XSS-Protection "1; mode=block";
+  add_header X-Content-Type-Options "nosniff";
+  add_header Referrer-Policy "no-referrer";
+  add_header Permissions-Policy "microphone=(), geolocation=()";
+
+  location / {
+    include proxy_params;
+    proxy_set_header X-Real-IP $remote_addr;
+  
+    proxy_pass http://localhost:{{ item.port }}/;
+  }
+}
