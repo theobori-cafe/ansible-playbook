@@ -17,6 +17,7 @@
     - nextcloud
     - tt-rss
     - theoboricafe
+    - gitea
   loop_control:
     loop_var: service_name
 
@@ -30,8 +31,17 @@
     - ldap
     - nextcloud
     - tt-rss
+    - gitea
   loop_control:
     loop_var: service_name
+
+- name: Create the Gitea log directory if not exists
+  ansible.builtin.file:
+    path: /usr/local/services/gitea/log
+    state: directory
+    owner: 1000
+    group: 1000
+    mode: 0755
 
 - name: Create the tt-rss config.d directory if not exists
   ansible.builtin.file:
@@ -44,37 +54,36 @@
     src: tt-rss/config.d/ldap.php.j2
     dest: /usr/local/services/tt-rss/config.d/ldap.php
 
-- name: Install services
-  block: 
-  - name: Create systemd services
-    ansible.builtin.copy:
-      dest: "/etc/systemd/system/{{ service_name }}.service"
-      content: |
-        [Unit]
-        Description={{ service_name }} service
-        Requires=docker.service
-        After=docker.service
+- name: Create systemd services
+  ansible.builtin.copy:
+    dest: "/etc/systemd/system/{{ service_name }}.service"
+    content: |
+      [Unit]
+      Description={{ service_name }} service
+      Requires=docker.service
+      After=docker.service
 
-        [Service]
-        Restart=on-failure
+      [Service]
+      Restart=on-failure
 
-        WorkingDirectory=/usr/local/services/{{ service_name }}
-  
-        ExecStart=docker compose up --build
-        ExecStop=docker compose down --remove-orphans
-  
-        [Install]
-        WantedBy=multi-user.target
-    loop:
-      - etherpad
-      - uptime-kuma
-      - searxng
-      - nextcloud
-      - ldap
-      - proxitok
-      - tt-rss
-      - theoboricafe
-    loop_control:
-      loop_var: service_name
+      WorkingDirectory=/usr/local/services/{{ service_name }}
+
+      ExecStart=docker compose up --build
+      ExecStop=docker compose down --remove-orphans
+
+      [Install]
+      WantedBy=multi-user.target
+  loop:
+    - etherpad
+    - uptime-kuma
+    - searxng
+    - nextcloud
+    - ldap
+    - proxitok
+    - tt-rss
+    - theoboricafe
+    - gitea
+  loop_control:
+    loop_var: service_name
   notify:
     - Reload systemctl

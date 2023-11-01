@@ -47,7 +47,7 @@ And then add a rule for `ufw` that allow you SSH connections.
 
 ## ℹ️ Roles and variables
 
-Roles:
+### Roles
 
 - **`nickjj.docker`**: Setup and configure Docker + docker-compose
 - **`weareinteractive.ufw`**: Setup the firewall and configure it
@@ -59,22 +59,48 @@ Roles:
 - **`nginx`**: Setup NGINX for the differents services created from the **`services`** role
 - **`tor`**: Setup a tor hidden service for every services
 
-Variables:
+### Variables
+
+#### SSH
 - **`ssh_identity_key_path`**: SSH public key used to auth
 - **`ssh_port`**: Change the default SSH port
+
+
+#### Port knocking
 - **`knockd_open_ssh_seq`**: Knockd open SSH (should be encrypted)
 - **`knockd_close_ssh_seq`**: knockd close SSH (should be encrypted)
 - **`knockd_tmp_open_ssh_seq`**: Temporary open SSH (should be encrypted)
 - **`knockd_opts`**: knockd CLI arguments used by the service
-- **`docker_hub_username`**: Docker Hub username
-- **`docker_hub_password`**: Docker Hub password
-- **`fqdn`**: The server FQDN, must be "domain.tld"
-- **`etherpad_db_user`**: Etherpad database username
-- **`etherpad_db_password`**: Etherpad database password
-- **`etherpad_admin_password`**: Etherpad admin password
+
+#### Domain
+- **`fqdn`**: The server FQDN, must be formatted as "domain.tld"
+
+#### Etherpad
+- **`etherpad_db_user`**: Etherpad database username (should be encrypted)
+- **`etherpad_db_password`**: Etherpad database password (should be encrypted)
+- **`etherpad_admin_password`**: Etherpad admin password (should be encrypted)
+
+#### Tor
 - **`tor_unix_socket`**: Tor UNIX socket path
-- **`ldap_admin_password`**: OpenLDAP administrator password
-- **`nextcloud_db_user`**: Nextcloud database user
-- **`nextcloud_db_password`**: Nextcloud database password
-- **`nextcloud_db_root_password`**: Nextcloud database root password
-- **`nextcloud_redis_password`**: Nextcloud Redis password
+
+#### LDAP
+- **`ldap_admin_password`**: OpenLDAP administrator password (should be encrypted)
+
+#### Nextcloud
+- **`nextcloud_db_user`**: Nextcloud database user (should be encrypted)
+- **`nextcloud_db_password`**: Nextcloud database password (should be encrypted)
+- **`nextcloud_db_root_password`**: Nextcloud database root password (should be encrypted)
+- **`nextcloud_redis_password`**: Nextcloud Redis password (should be encrypted)
+
+#### Tiny Tiny RSS
+- **`ttrss_db_username`**: Tiny Tiny RSS database user (should be encrypted)
+- **`ttrss_db_password`**: Tiny Tiny RSS database password (should be encrypted)
+
+#### Gitea
+- **`gitea_db_root_password`**: Gitea database root password (should be encrypted)
+- **`gitea_db_user`**: Gitea database user (should be encrypted)
+- **`gitea_db_password`**: Gitea database password (should be encrypted)
+- **`gitea_mailer_user`**: Gitea mailer user (should be encrypted)
+- **`gitea_mailer_password`**: Gitea mailer password (should be encrypted)
+- **`gitea_mailer_host`**: Gitea mailer host (should be encrypted)
+- **`gitea_mailer_from`**: Gitea mailer source email address (should be encrypted)

@@ -1,0 +1,51 @@
+version: "3"
+
+networks:
+  gitea:
+    external: false
+  ldap_net:
+    external: true
+
+volumes:
+  gitea:
+    driver: local
+  db:
+    driver: local
+
+services:
+  server:
+    image: gitea/gitea:1.20.5
+    container_name: gitea
+    env_file:
+      - .env
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__database__DB_TYPE=mysql
+      - GITEA__database__HOST=db:3306
+      - GITEA__database__NAME=${MYSQL_DATABASE}
+      - GITEA__database__USER=${MYSQL_USER}
+      - GITEA__database__PASSWD=${MYSQL_PASSWORD}
+    restart: always
+    networks:
+      - gitea
+      - ldap_net
+    volumes:
+      - gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ./log:/data/gitea/log
+    ports:
+      - "127.0.0.1:3002:3000"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - gitea
+    volumes:
+      - db:/var/lib/mysql

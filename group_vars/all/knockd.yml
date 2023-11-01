@@ -1,8 +1,3 @@
-# Examples:
-#
-# knockd_open_ssh_seq: 7000,8000,9000
-# knockd_tmp_open_ssh_seq: 4000,5000,6000
-
 knockd_open_ssh_seq: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           64373262323839313933346366616532393733613639346233616336646536633731363432626437
