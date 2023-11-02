@@ -104,3 +104,7 @@ And then add a rule for `ufw` that allow you SSH connections.
 - **`gitea_mailer_password`**: Gitea mailer password (should be encrypted)
 - **`gitea_mailer_host`**: Gitea mailer host (should be encrypted)
 - **`gitea_mailer_from`**: Gitea mailer source email address (should be encrypted)
+
+## 🎉 Tasks
+- [ ] Tor HTTP response security
+  - [ ] Split NGINX onfigurations
