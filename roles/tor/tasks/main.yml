@@ -28,30 +28,6 @@
     msg: "{{ tor_hostname.stdout }}"
   when: tor_hostname is defined
 
-- name: Configure NGINX for Tor hidden servives (domain)
-  ansible.builtin.blockinfile: 
-    state: present
-    insertafter: EOF
-    dest: "/etc/nginx/sites-available/{{ fqdn }}"
-    content: |
-      server {
-        listen {{ tor_unix_socket }};
-
-        access_log /var/log/nginx/{{ fqdn }}.log;
-
-        server_name {{ tor_hostname.stdout }};
-
-        location / {
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-NginX-Proxy true;
-          proxy_pass http://localhost:3000/;
-          proxy_ssl_session_reuse off;
-          proxy_set_header Host $http_host;
-          proxy_cache_bypass $http_upgrade;
-          proxy_redirect off;
-        }
-      }
-
 - name: Configure NGINX for Tor hidden servives (subdomains)
   ansible.builtin.blockinfile: 
     state: present
@@ -63,7 +39,11 @@
 
         access_log /var/log/nginx/{{ item.service_name }}.log;
 
-        server_name {{ item.service_name | split('.') | first }}.{{ tor_hostname.stdout }};
+        {% if item.service_name == fqdn %}
+          server_name {{ tor_hostname.stdout }};
+        {% else %}
+          server_name {{ item.service_name | split('.') | first }}.{{ tor_hostname.stdout }};
+        {% endif %}
 
         location / {
           proxy_set_header X-Real-IP $remote_addr;
@@ -80,6 +60,9 @@
     - { service_name: "etherpad.{{ fqdn }}", service_port: "9001" }
     - { service_name: "search.{{ fqdn }}", service_port: "8080" }
     - { service_name: "cringe.{{ fqdn }}", service_port: "8081" }
-    - { service_name: "status.{{ fqdn }}", service_port: "3001" }
     - { service_name: "mail.{{ fqdn }}", service_port: "8181" }
-    - { service_name: "cloud.{{ fqdn }}", service_port: "11000" }
+    - { service_name: "status.{{ fqdn }}", service_port: "3001" }
+    - { service_name: "cloud.{{ fqdn }}", service_port: "8000" }
+    - { service_name: "news.{{ fqdn }}", service_port: "8280" }
+    - { service_name: "{{ fqdn }}", service_port: "3000" }
+    - { service_name: "git.{{ fqdn }}", service_port: "3002" }
