@@ -43,6 +43,14 @@
     group: 1000
     mode: 0755
 
+- name: Create the Nextcloud log directory if not exists
+  ansible.builtin.file:
+    path: /usr/local/services/nextcloud/data
+    owner: 33
+    group: 33
+    state: directory
+    mode: 0755
+
 - name: Create the tt-rss config.d directory if not exists
   ansible.builtin.file:
     path: /usr/local/services/tt-rss/config.d
