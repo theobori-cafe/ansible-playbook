@@ -8,6 +8,14 @@
     src: fail2ban/jail.local
     dest: /etc/fail2ban
 
+- name: Copy the fail2ban Gitea configuration files
+  ansible.builtin.copy:
+    src: fail2ban/{{ item }}
+    dest: /etc/fail2ban/{{ item }}
+  loop:
+    - jail.d/
+    - filter.d/
+
 - name: Restart service fail2ban
   ansible.builtin.service:
     name: fail2ban

@@ -19,7 +19,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./redis/data:/var/lib/redis
+      - redis:/var/lib/redis
     environment:
       - REDIS_REPLICATION_MODE=master
     networks:
@@ -32,6 +32,7 @@ services:
       - 127.0.0.1:8000:80
     volumes:
       - nextcloud:/var/www/html
+      - ./data:/var/www/html/data/
     env_file:
       - .env
     environment:
@@ -44,6 +45,7 @@ services:
 volumes:
   nextcloud:
   db:
+  redis:
 
 networks:
   ldap_net:
