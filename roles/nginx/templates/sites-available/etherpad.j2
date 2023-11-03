@@ -7,7 +7,7 @@ server {
   ssl_certificate_key /etc/letsencrypt/live/{{ item.name }}/privkey.pem;
   
   include header_params;
-  add_header Content-Security-Policy "default-src 'none'; frame-src 'self'; img-src 'self'; connect-src 'self'; script-src 'self' 'unsafe-eval'; script-src-elem 'self' 'unsafe-hashes' 'sha256-MUFMxGAy8TuX+PWgSqe0ReY3X+j2wfVo4w7W+PnwhAw=' 'sha256-ibNaIvmfNwDgwoWLRuzNqZ70N73f+h1vy5W+CIb0mYs='; style-src 'self' 'unsafe-inline'; style-src-elem 'self' 'unsafe-hashes' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-13Xtc89MSfsDPErm3syFx70NQqw9DB0exK2LYLR9Bes=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'self'";
+  add_header Content-Security-Policy "default-src 'none'; frame-src 'self'; img-src 'self'; connect-src 'self'; script-src 'self' 'unsafe-eval'; script-src-elem 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; style-src-elem 'self' 'unsafe-hashes' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-13Xtc89MSfsDPErm3syFx70NQqw9DB0exK2LYLR9Bes=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'self'";
 
   location / {
     include proxy_params;
