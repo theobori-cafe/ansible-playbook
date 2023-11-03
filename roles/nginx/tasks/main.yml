@@ -39,6 +39,7 @@
     - { filename: "tt-rss", name: "news.{{ fqdn }}", port: "8280" }
     - { filename: "website", name: "{{ fqdn }}", port: "3000" }
     - { filename: "gitea", name: "git.{{ fqdn }}", port: "3002" }
+    - { filename: "ssp", name: "password.{{ fqdn }}", port: "3003" }
 
 - name: Install the default NGINX configuration file
   ansible.builtin.copy:
@@ -67,6 +68,7 @@
     - cloud.{{ fqdn }}
     - news.{{ fqdn }}
     - git.{{ fqdn }}
+    - password.{{ fqdn }}
     - "{{ fqdn }}"
     - default
   loop_control:

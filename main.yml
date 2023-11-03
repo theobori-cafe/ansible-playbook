@@ -95,6 +95,8 @@
       - domains:
         - cloud.{{ fqdn }}
       - domains:
+        - password.{{ fqdn }}
+      - domains:
         - "{{ fqdn }}"
         - www.{{ fqdn }}
 
