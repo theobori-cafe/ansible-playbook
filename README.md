@@ -85,6 +85,11 @@ And then add a rule for `ufw` that allow you SSH connections.
 
 #### LDAP
 - **`ldap_admin_password`**: OpenLDAP administrator password (should be encrypted)
+- **`ldap_auth_services_basedn`**: OpenLDAP base DN (should be encrypted)
+- **`ldap_auth_services_binddn`**: OpenLDAP bind DN (should be encrypted)
+- **`ldap_auth_services_bindpw`**: OpenLDAP bind password (should be encrypted)
+- **`ldap_auth_services_login_attrib`**: OpenLDAP login attribute cn
+
 
 #### Nextcloud
 - **`nextcloud_db_user`**: Nextcloud database user (should be encrypted)
@@ -100,10 +105,15 @@ And then add a rule for `ufw` that allow you SSH connections.
 - **`gitea_db_root_password`**: Gitea database root password (should be encrypted)
 - **`gitea_db_user`**: Gitea database user (should be encrypted)
 - **`gitea_db_password`**: Gitea database password (should be encrypted)
-- **`gitea_mailer_user`**: Gitea mailer user (should be encrypted)
-- **`gitea_mailer_password`**: Gitea mailer password (should be encrypted)
-- **`gitea_mailer_host`**: Gitea mailer host (should be encrypted)
-- **`gitea_mailer_from`**: Gitea mailer source email address (should be encrypted)
+  
+#### Mailer
+- **`mailer_user`**: Mailer (SMTP) user (should be encrypted)
+- **`mailer_password`**: Mailer (SMTP) password (should be encrypted)
+- **`mailer_host`**: Mailer (SMTP) host (should be encrypted)
+- **`mailer_from`**: Mailer (SMTP) source email address (should be encrypted)
+
+#### Self Service Password
+- **`ssp_secretkey`**: SSP secret key use to encrypt/decrypt the token (should be encrypted)
 
 ## 🎉 Tasks
 - [ ] Tor HTTP response security

@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  ssp-app:
+    image: tiredofit/self-service-password:latest
+    container_name: ssp-app
+    volumes:
+      - ./logs/:/www/logs
+    ports:
+      - 127.0.0.1:3003:80
+    env_file:
+      - .env
+    networks:
+      - ldap_net
+    restart: always
+
+networks:
+  ldap_net:
+    external: true
