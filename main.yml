@@ -97,6 +97,8 @@
       - domains:
         - password.{{ fqdn }}
       - domains:
+        - services.{{ fqdn }}
+      - domains:
         - "{{ fqdn }}"
         - www.{{ fqdn }}
 

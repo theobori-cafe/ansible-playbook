@@ -40,6 +40,7 @@
     - { filename: "website", name: "{{ fqdn }}", port: "3000" }
     - { filename: "gitea", name: "git.{{ fqdn }}", port: "3002" }
     - { filename: "ssp", name: "password.{{ fqdn }}", port: "3003" }
+    - { filename: "services", name: "services.{{ fqdn }}", port: "1313" }
 
 - name: Install the default NGINX configuration file
   ansible.builtin.copy:
@@ -70,6 +71,7 @@
     - git.{{ fqdn }}
     - password.{{ fqdn }}
     - "{{ fqdn }}"
+    - "services.{{ fqdn }}"
     - default
   loop_control:
     loop_var: service_name

@@ -1,0 +1,12 @@
+version: '3.0'
+
+services:
+  services-website:
+    image: services-theoboricafe:1.0
+    container_name: services-theoboricafe
+    build:
+      dockerfile: ./docker/Dockerfile
+      context: https://github.com/theobori-cafe/services.theobori.cafe.git
+    ports:
+      - 127.0.0.1:1313:80
+    restart: unless-stopped
