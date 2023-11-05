@@ -19,6 +19,7 @@
     - theoboricafe
     - gitea
     - ssp
+    - services
   loop_control:
     loop_var: service_name
 
@@ -94,6 +95,7 @@
     - theoboricafe
     - gitea
     - ssp
+    - services
   loop_control:
     loop_var: service_name
   notify:
