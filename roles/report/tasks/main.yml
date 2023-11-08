@@ -1,0 +1,66 @@
+- name: Install goaccess
+  ansible.builtin.package:
+    name: goaccess
+    state: present
+
+- name: Copy the goaccess configuration file
+  ansible.builtin.copy:
+    src: goaccess.conf
+    dest: /etc/goaccess/goaccess.conf
+
+- name: Create the report output directory
+  ansible.builtin.file:
+    path: /report
+    state: directory
+    mode: 0755
+
+- name: Create report (month, week and day) scripts
+  ansible.builtin.copy:
+    content: |
+      #!/usr/bin/env bash
+
+      set -e 
+
+      # Base output directory
+      OUTPUT_BASE_DIR=/report/{{ item.frequency }}
+      # Output directory
+      OUTPUT_DIR=${OUTPUT_BASE_DIR}/$(date -I)
+      # Output final file
+      OUTPUT=${OUTPUT_DIR}/index.html
+
+      # Create the output subdir
+      mkdir -p ${OUTPUT_DIR}
+
+      # Parse and generate the goaccess report
+      report-range "{{ item.start_date }}" "{{ item.end_date }}" "${OUTPUT}" "/var/log/nginx/access.log*"
+
+      # Overwrite the current report
+      cp -f ${OUTPUT} ${OUTPUT_BASE_DIR}/index.html
+
+    dest: /usr/local/scripts/report-{{ item.frequency }}
+    mode: 0755
+  with_items:
+    - { frequency: "month", start_date: "$(date --date='-1 month' -I)", end_date: "$(date -I)" }
+    - { frequency: "week", start_date: "$(date --date='-1 week' -I)", end_date: "$(date -I)" }
+
+- name: Creates a cron file for the weekly web logs reporting
+  ansible.builtin.cron:
+    name: weekly report
+    minute: "0"
+    hour: "0"
+    day: "*"
+    month: "*"
+    weekday: "1"
+    user: root
+    job: "/usr/local/scripts/report-week"
+
+- name: Creates a cron file for the monthly web logs reporting
+  ansible.builtin.cron:
+    name: monthly report
+    minute: "0"
+    hour: "0"
+    day: "1"
+    month: "*"
+    weekday: "*"
+    user: root
+    job: "/usr/local/scripts/report-month"

@@ -1,8 +1,8 @@
-- name: Update
+- name: Update debian packages with apt
   ansible.builtin.apt:
     update_cache: yes
 
-- name: Upgrade
+- name: Upgrade debian packages with apt
   ansible.builtin.apt:
     upgrade: safe
 
@@ -16,3 +16,21 @@
     - apache2-utils
     - sudo
     - exa
+    - cron
+    - gzip
+    - make
+
+- name: Check if the scripts directory exists
+  ansible.builtin.stat:
+    path: /usr/local/scripts
+  register: scripts_dir
+
+- name: Git clone scripts
+  ansible.builtin.git:
+    repo: https://github.com/theobori-cafe/scripts
+    dest: /usr/local/scripts/
+  when: scripts_dir.stat.exists == false
+
+- name: Install gobally the scripts
+  ansible.builtin.shell: |
+    make re -C /usr/local/scripts

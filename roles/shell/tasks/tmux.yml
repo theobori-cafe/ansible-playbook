@@ -3,7 +3,7 @@
     name: tmux
     state: present
   
-# - name: Ansible create the tmux directory if not exists
+# - name: Create the tmux directory if not exists
 #   ansible.builtin.file:
 #     path: $HOME/.tmux/plugins
 #     state: directory
