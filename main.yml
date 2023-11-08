@@ -104,6 +104,9 @@
 
   - role: services
     tags: services
+  
+  - role: report
+    tags: report
 
   - role: nginx
     tags: nginx

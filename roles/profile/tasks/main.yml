@@ -13,7 +13,7 @@
       's/# SKEL/SKEL/' \
       /etc/default/useradd
 
-- name: Ansible create the config directory if not exists
+- name: Create the config directory if not exists
   ansible.builtin.file:
     path: /etc/skel/.config
     state: directory
