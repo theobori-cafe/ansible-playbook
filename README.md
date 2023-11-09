@@ -58,6 +58,7 @@ And then add a rule for `ufw` that allow you SSH connections.
 - **`services`**: Setup the Systemd services
 - **`nginx`**: Setup NGINX for the differents services created from the **`services`** role
 - **`tor`**: Setup a tor hidden service for every services
+- **`magic`**: Setup the magic stuff, including shell scripts, cron jobs, etc. for backup and web server statistics reporting.
 
 ### Variables
 
@@ -116,5 +117,5 @@ And then add a rule for `ufw` that allow you SSH connections.
 - **`ssp_secretkey`**: SSP secret key use to encrypt/decrypt the token (should be encrypted)
 
 ## 🎉 Tasks
-- [ ] Tor HTTP response security
-  - [ ] Split NGINX onfigurations
+- [ ] Tor HTTP response security (with NGINX)
+- [x] Backup and web server statistics

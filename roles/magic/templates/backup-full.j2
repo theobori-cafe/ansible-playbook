@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Base output directory
+BACKUP_DIR="/backup/$(date -I)"
+# Final tarball output
+OUTPUT_TARBALL=${BACKUP_DIR}.tar.gz
+# Services directory (docker-compose, config, etc.)
+SERVICES_DIR="/usr/local/services"
+# Backup file retention
+RETENTION=3
+
+# dockerv source points (volumes and docker compose directories)
+POINTS=(
+    "${SERVICES_DIR}/ldap"
+    "nextcloud_nextcloud"
+    "monitoring_grafana-data"
+    "${SERVICES_DIR}/uptime-kuma"
+    "gitea_gitea"
+)
+
+# Creating backup directory
+mkdir -p ${BACKUP_DIR}
+
+# Saving and packing Docker volumes
+BACKUP_DIR=${BACKUP_DIR} backup-docker-volumes ${POINTS[@]}
+
+# Database options
+DB_OPTS=(
+    "postgresql" "{{ etherpad_db_user }}" "{{ etherpad_db_password }}" "etherpad" "etherpad-db-1"
+    "postgresql" "{{ ttrss_db_username }}" "{{ ttrss_db_password }}" "postgres" "tt-rss-db-1"
+    "mysql" "{{ nextcloud_db_user }}" "{{ nextcloud_db_password }}" "nextcloud" "nextcloud-db-1"
+    "mysql" "root" "{{ gitea_db_root_password }}" "gitea" "gitea-db-1"
+)
+
+{% raw %}
+for i in $(seq 0 5 $(expr ${#DB_OPTS[@]} - 1))
+{% endraw %}
+do
+    BACKUP_DIR=${BACKUP_DIR} backup-docker-db \
+        -e ${DB_OPTS[i]} \
+        -u ${DB_OPTS[i + 1]} \
+        -p ${DB_OPTS[i + 2]} \
+        -d ${DB_OPTS[i + 3]} \
+        -c ${DB_OPTS[i + 4]}
+done
+
+# Create the tarball
+tar -czvf ${OUTPUT_TARBALL} -C ${BACKUP_DIR} .
+
+# Remove the directory
+rm -rf ${BACKUP_DIR}
+
+# Purge old files
+find "/backup" \
+    -type f \
+    -mtime +${RETENTION} \
+    -delete

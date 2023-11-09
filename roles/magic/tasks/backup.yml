@@ -1,0 +1,16 @@
+- name: Create full backup script
+  ansible.builtin.template:
+    src: backup-full.j2
+    dest: /usr/local/scripts/backup-full
+    mode: 0755
+
+- name: Creates a cron file for the daily full services backup
+  ansible.builtin.cron:
+    name: daily backup
+    minute: "0"
+    hour: "0"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    user: root
+    job: "/usr/local/scripts/backup-full"

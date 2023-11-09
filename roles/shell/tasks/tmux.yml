@@ -2,20 +2,3 @@
   ansible.builtin.package:
     name: tmux
     state: present
-  
-# - name: Create the tmux directory if not exists
-#   ansible.builtin.file:
-#     path: $HOME/.tmux/plugins
-#     state: directory
-#     mode: 0755
-#     recurse: yes
-
-# - name: Cloning the Tmux Plugin Manager repository
-#   ansible.builtin.git:
-#     repo: https://github.com/tmux-plugins/tpm
-#     dest: $HOME/.tmux/plugins/tpm
-
-# - name: Copy the tmux configuration file
-#   ansible.builtin.copy:
-#     src: ../../common/files/.tmux.conf
-#     dest: $HOME
