@@ -6,7 +6,7 @@
 - name: Copy the goaccess configuration file
   ansible.builtin.copy:
     src: goaccess.conf
-    dest: /etc/goaccess/goaccess.conf
+    dest: /etc/goaccess/public.conf
 
 - name: Create the report output directory
   ansible.builtin.file:
@@ -32,7 +32,11 @@
       mkdir -p ${OUTPUT_DIR}
 
       # Parse and generate the goaccess report
-      report-range "{{ item.start_date }}" "{{ item.end_date }}" "${OUTPUT}" "/var/log/nginx/access.log*"
+      CONF="/etc/goaccess/public.conf" report-range \
+        "{{ item.start_date }}" \
+        "{{ item.end_date }}" \
+        "${OUTPUT}" \
+        "/var/log/nginx/access.log*"
 
       # Overwrite the current report
       cp -f ${OUTPUT} ${OUTPUT_BASE_DIR}/index.html
