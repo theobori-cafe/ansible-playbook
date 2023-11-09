@@ -5,8 +5,8 @@ services:
     image: theoboricafe/website:1.0
     container_name: theoboricafe
     build:
-      dockerfile: Dockerfile
+      dockerfile: ./docker/Dockerfile
       context: https://github.com/theobori-cafe/theobori.cafe.git
     ports:
-      - 127.0.0.1:3000:8080
+      - 127.0.0.1:3000:80
     restart: unless-stopped

@@ -3,7 +3,7 @@
     name: goaccess
     state: present
 
-- name: Copy the goaccess configuration file
+- name: Copy the goaccess configuration file for an exposed report
   ansible.builtin.copy:
     src: goaccess.conf
     dest: /etc/goaccess/public.conf
