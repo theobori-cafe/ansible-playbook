@@ -1,0 +1,8 @@
+- name: Include task files
+  include_tasks: "{{ task_name }}.yml"
+  loop: 
+    - base
+    - report
+    - backup
+  loop_control:
+    loop_var: task_name

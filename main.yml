@@ -105,8 +105,8 @@
   - role: services
     tags: services
   
-  - role: report
-    tags: report
+  - role: magic
+    tags: magic
 
   - role: nginx
     tags: nginx
