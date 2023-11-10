@@ -13,4 +13,4 @@
     month: "*"
     weekday: "*"
     user: root
-    job: "/usr/local/scripts/backup-full"
+    job: "PATH=\"${PATH}:/usr/local/bin\" /usr/local/scripts/backup-full"

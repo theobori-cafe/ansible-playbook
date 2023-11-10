@@ -56,7 +56,7 @@
     month: "*"
     weekday: "1"
     user: root
-    job: "/usr/local/scripts/report-week"
+    job: "PATH=\"${PATH}:/usr/local/bin\" /usr/local/scripts/report-week"
 
 - name: Creates a cron file for the monthly web logs reporting
   ansible.builtin.cron:
@@ -67,4 +67,4 @@
     month: "*"
     weekday: "*"
     user: root
-    job: "/usr/local/scripts/report-month"
+    job: "PATH=\"${PATH}:/usr/local/bin\" /usr/local/scripts/report-month"
