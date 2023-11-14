@@ -20,6 +20,7 @@
     - gitea
     - ssp
     - services
+    - privatebin
   loop_control:
     loop_var: service_name
 
@@ -96,6 +97,7 @@
     - gitea
     - ssp
     - services
+    - privatebin
   loop_control:
     loop_var: service_name
   notify:
