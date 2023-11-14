@@ -99,6 +99,8 @@
       - domains:
         - services.{{ fqdn }}
       - domains:
+        - bin.{{ fqdn }}
+      - domains:
         - "{{ fqdn }}"
         - www.{{ fqdn }}
 
