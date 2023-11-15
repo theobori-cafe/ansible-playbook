@@ -1,6 +1,6 @@
 server {
   include listen-443;
-  server_name {{ item.name }}
+  server_name {{ item.name }};
   
   include ssl_params;
   ssl_certificate /etc/letsencrypt/live/{{ item.name }}/fullchain.pem;
