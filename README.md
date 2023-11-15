@@ -117,5 +117,5 @@ And then add a rule for `ufw` that allow you SSH connections.
 - **`ssp_secretkey`**: SSP secret key use to encrypt/decrypt the token (should be encrypted)
 
 ## 🎉 Tasks
-- [ ] Tor HTTP response security (with NGINX)
+- [x] Tor HTTP response security (with NGINX)
 - [x] Backup and web server statistics
