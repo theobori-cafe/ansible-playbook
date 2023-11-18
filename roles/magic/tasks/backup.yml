@@ -11,6 +11,12 @@
   ansible.builtin.shell: |
     dockerv init
 
+- name: Create the backup output directory
+  ansible.builtin.file:
+    path: /backup
+    state: directory
+    mode: 0755
+
 - name: Create full backup script
   ansible.builtin.template:
     src: backup-full.j2
