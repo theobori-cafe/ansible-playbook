@@ -5,14 +5,14 @@ set -e
 # Base output directory
 BACKUP_DIR="/backup/$(date -I)"
 # Final tarball output
-OUTPUT_TARBALL=${BACKUP_DIR}.tar.gz
+readonly OUTPUT_TARBALL=${BACKUP_DIR}.tar.gz
 # Services directory (docker-compose, config, etc.)
-SERVICES_DIR="/usr/local/services"
+readonly SERVICES_DIR="/usr/local/services"
 # Backup file retention
-RETENTION=3
+readonly RETENTION=3
 
 # dockerv source points (volumes and docker compose directories)
-POINTS=(
+readonly POINTS=(
     "${SERVICES_DIR}/ldap"
     "nextcloud_nextcloud"
     "monitoring_grafana-data"
@@ -27,7 +27,7 @@ mkdir -p ${BACKUP_DIR}
 BACKUP_DIR=${BACKUP_DIR} backup-docker-volumes ${POINTS[@]}
 
 # Database options
-DB_OPTS=(
+readonly DB_OPTS=(
     "postgresql" "{{ etherpad_db_user }}" "{{ etherpad_db_password }}" "etherpad" "etherpad-db-1"
     "postgresql" "{{ ttrss_db_username }}" "{{ ttrss_db_password }}" "postgres" "tt-rss-db-1"
     "mysql" "{{ nextcloud_db_user }}" "{{ nextcloud_db_password }}" "nextcloud" "nextcloud-db-1"

@@ -22,17 +22,19 @@
       set -e 
 
       # Base output directory
-      OUTPUT_BASE_DIR=/report/{{ item.frequency }}
+      readonly OUTPUT_BASE_DIR=/report/{{ item.frequency }}
       # Output directory
-      OUTPUT_DIR=${OUTPUT_BASE_DIR}/$(date -I)
+      readonly OUTPUT_DIR=${OUTPUT_BASE_DIR}/$(date -I)
       # Output final file
-      OUTPUT=${OUTPUT_DIR}/index.html
+      readonly OUTPUT=${OUTPUT_DIR}/index.html
+      # Grep Regex
+      readonly GREP_RE='^(\d+\.\d+\.\d+\.\d+) - (?:[a-zA-Z0-9-]+\.)*{{ fqdn }}'
 
       # Create the output subdir
       mkdir -p ${OUTPUT_DIR}
 
       # Parse and generate the goaccess report
-      CONF="/etc/goaccess/public.conf" report-range \
+      CONF="/etc/goaccess/public.conf" GREP_FILTER="${GREP_RE}" report-range \
         "{{ item.start_date }}" \
         "{{ item.end_date }}" \
         "${OUTPUT}" \
