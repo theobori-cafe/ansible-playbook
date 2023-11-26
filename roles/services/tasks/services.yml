@@ -21,6 +21,7 @@
     - ssp
     - services
     - privatebin
+    - calibre-web
   loop_control:
     loop_var: service_name
 
@@ -98,6 +99,7 @@
     - ssp
     - services
     - privatebin
+    - calibre-web
   loop_control:
     loop_var: service_name
   notify:

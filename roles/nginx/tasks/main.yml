@@ -42,6 +42,7 @@
     - { filename: "ssp", name: "password.{{ fqdn }}", port: "3003" }
     - { filename: "services", name: "services.{{ fqdn }}", port: "1313" }
     - { filename: "privatebin", name: "bin.{{ fqdn }}", port: "3004" }
+    - { filename: "calibre-web", name: "books.{{ fqdn }}", port: "8083" }
 
 - name: Install the default NGINX configuration file
   ansible.builtin.copy:
@@ -74,6 +75,7 @@
     - "{{ fqdn }}"
     - "services.{{ fqdn }}"
     - "bin.{{ fqdn }}"
+    - "books.{{ fqdn }}"
     - default
   loop_control:
     loop_var: service_name

@@ -55,5 +55,4 @@
     - "password.{{ fqdn }}"
     - "services.{{ fqdn }}"
     - "bin.{{ fqdn }}"
-
-  register: config_nginx
+    - "books.{{ fqdn }}"
