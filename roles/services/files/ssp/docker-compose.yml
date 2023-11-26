@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   ssp-app:
-    image: tiredofit/self-service-password:latest
+    image: tiredofit/self-service-password
     container_name: ssp-app
     volumes:
       - ./logs/:/www/logs

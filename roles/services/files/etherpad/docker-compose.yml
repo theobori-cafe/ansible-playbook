@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   etherpad:
-    image: etherpad/etherpad:1.8.17
+    image: etherpad/etherpad
     container_name: etherpad
     ports:
       - '127.0.0.1:9001:9001'
