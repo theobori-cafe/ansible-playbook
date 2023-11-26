@@ -101,6 +101,8 @@
       - domains:
         - bin.{{ fqdn }}
       - domains:
+        - books.{{ fqdn }}
+      - domains:
         - "{{ fqdn }}"
         - www.{{ fqdn }}
 
