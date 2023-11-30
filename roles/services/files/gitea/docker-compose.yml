@@ -37,6 +37,7 @@ services:
       - ./log:/data/gitea/log
     ports:
       - "127.0.0.1:3002:3000"
+      - "22:22"
     depends_on:
       - db
 

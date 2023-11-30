@@ -42,12 +42,15 @@
         to_port: '587'
       - rule: allow
         to_port: '993'
+      # Gitea SSH exception
+      - rule: allow
+        to_port: '22'
       - rule: allow
         to_port: '995'
       - rule: allow
         to_port: '4190'
         proto: tcp      
-      # Delete this default rule
+      # Delete default rule
       - rule: allow
         name: Anywhere
         delete: true
