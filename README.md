@@ -66,7 +66,6 @@ And then add a rule for `ufw` that allow you SSH connections.
 - **`ssh_identity_key_path`**: SSH public key used to auth
 - **`ssh_port`**: Change the default SSH port
 
-
 #### Port knocking
 - **`knockd_open_ssh_seq`**: Knockd open SSH (should be encrypted)
 - **`knockd_close_ssh_seq`**: knockd close SSH (should be encrypted)
