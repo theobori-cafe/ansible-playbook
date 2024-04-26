@@ -9,12 +9,14 @@
     state: directory
     mode: 0755
     recurse: yes
+  becomse: false
 
 - name: Copy the fish configuration directory
   ansible.builtin.copy:
     src: ../../common/files/fish
     dest: $HOME/.config
     force: yes
+  becomse: false
 
 - name: Set fish as the default shell for the current user
   ansible.builtin.shell: |
