@@ -2,12 +2,13 @@
   ansible.builtin.file:
     path: /usr/local/services
     state: directory
-    mode: 0755
+    mode: "0755"
 
 - name: Copy the docker compose files
   ansible.builtin.copy:
     src: "{{ service_name }}"
     dest: "/usr/local/services/"
+    mode: "0644"
   loop:
     - proxitok
     - searxng
@@ -27,9 +28,9 @@
 
 - name: Copy services environment files
   ansible.builtin.template:
-      src: "{{ service_name }}/.env.j2"
-      dest: "/usr/local/services/{{ service_name }}/.env"
-      mode: 0640
+    src: "{{ service_name }}/.env.j2"
+    dest: "/usr/local/services/{{ service_name }}/.env"
+    mode: "0640"
   loop:
     - etherpad
     - ldap
@@ -44,9 +45,9 @@
   ansible.builtin.file:
     path: /usr/local/services/gitea/log
     state: directory
-    owner: 1000
-    group: 1000
-    mode: 0755
+    owner: "1000"
+    group: "1000"
+    mode: "0755"
 
 - name: Create the Nextcloud log directory if not exists
   ansible.builtin.file:
@@ -54,18 +55,19 @@
     owner: 33
     group: 33
     state: directory
-    mode: 0755
+    mode: "0755"
 
 - name: Create the tt-rss config.d directory if not exists
   ansible.builtin.file:
     path: /usr/local/services/tt-rss/config.d
     state: directory
-    mode: 0755
+    mode: "0755"
 
 - name: Copy the LDAP configuration PHP file
   ansible.builtin.template:
     src: tt-rss/config.d/ldap.php.j2
     dest: /usr/local/services/tt-rss/config.d/ldap.php
+    mode: "0644"
 
 - name: Create systemd services
   ansible.builtin.copy:
@@ -86,6 +88,7 @@
 
       [Install]
       WantedBy=multi-user.target
+    mode: "0644"
   loop:
     - etherpad
     - uptime-kuma

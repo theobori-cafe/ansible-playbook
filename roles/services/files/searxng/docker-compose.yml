@@ -22,7 +22,7 @@ services:
     networks:
       - searxng
     ports:
-     - "127.0.0.1:8080:8080"
+      - "127.0.0.1:8080:8080"
     volumes:
       - ./searxng:/etc/searxng:rw
     environment:
@@ -38,6 +38,7 @@ services:
       options:
         max-size: "1m"
         max-file: "1"
+
 networks:
   searxng:
     ipam:

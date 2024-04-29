@@ -7,19 +7,20 @@
   ansible.builtin.copy:
     src: goaccess.conf
     dest: /etc/goaccess/public.conf
+    mode: "0644"
 
 - name: Create the report output directory
   ansible.builtin.file:
     path: /report
     state: directory
-    mode: 0755
+    mode: "0755"
 
 - name: Create report (month, week and day) scripts
   ansible.builtin.copy:
     content: |
       #!/usr/bin/env bash
 
-      set -e 
+      set -e
 
       # Base output directory
       readonly OUTPUT_BASE_DIR=/report/{{ item.frequency }}
@@ -44,7 +45,7 @@
       cp -f ${OUTPUT} ${OUTPUT_BASE_DIR}/index.html
 
     dest: /usr/local/scripts/report-{{ item.frequency }}
-    mode: 0755
+    mode: "0755"
   with_items:
     - { frequency: "month", start_date: "$(date --date='-1 month' -I)", end_date: "$(date -I)" }
     - { frequency: "week", start_date: "$(date --date='-1 week' -I)", end_date: "$(date -I)" }

@@ -1,5 +1,5 @@
 - name: Include task files
-  include_tasks: "{{ task_name }}.yml"
+  ansible.builtin.include_tasks: "{{ task_name }}.yml"
   loop:
     - services
     - mail

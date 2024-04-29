@@ -10,7 +10,7 @@
   ansible.builtin.file:
     path: " {{ item }}"
     state: directory
-    mode: 0755
+    mode: "0755"
   loop:
     - /etc/nginx/sites-available/
     - /etc/nginx/sites-enabled/
@@ -19,16 +19,19 @@
   ansible.builtin.copy:
     src: nginx-conf/
     dest: /etc/nginx/
+    mode: "0755"
 
 - name: Copy the NGINX SSL parameters file
   ansible.builtin.template:
     src: ssl_params.j2
     dest: /etc/nginx/ssl_params
+    mode: "0644"
 
 - name: Install services NGINX configuration files
   ansible.builtin.template:
     src: "sites-available/{{ item.filename }}.j2"
     dest: "/etc/nginx/sites-available/{{ item.name }}"
+    mode: "0644"
   with_items:
     - { filename: "etherpad", name: "etherpad.{{ fqdn }}", port: "9001" }
     - { filename: "search", name: "search.{{ fqdn }}", port: "8080" }
@@ -54,14 +57,16 @@
 
         return 301 https://$host$request_uri;
       }
+    mode: "0644"
 
 - name: Create symlinks
-  file:
+  ansible.builtin.file:
     src: "/etc/nginx/sites-available/{{ service_name }}"
     dest: "/etc/nginx/sites-enabled/{{ service_name }}"
     state: link
-    force: yes
+    force: true
     follow: false
+    mode: "0644"
   loop:
     - etherpad.{{ fqdn }}
     - search.{{ fqdn }}
@@ -84,4 +89,4 @@
   ansible.builtin.service:
     name: nginx
     state: restarted
-    enabled: yes
+    enabled: true

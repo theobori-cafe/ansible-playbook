@@ -1,12 +1,14 @@
 - name: Override the SSH daemon configuration
-  ansible.builtin.shell: |
-    sed -i \
-      -e 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' \
-      -e 's/#Port 22/Port {{ ssh_port }}/' \
-      -e 's/#SyslogFacility/SyslogFacility/' \
-      -e 's/#LogLevel/LogLevel/' \
-      -e 's/#PubkeyAuthentication/PubkeyAuthentication/' \
-      /etc/ssh/sshd_config
+  ansible.builtin.replace:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  loop:
+    - { regexp: "#PermitRootLogin prohibit-password", replace: "PermitRootLogin yes" }
+    - { regexp: "#Port 22", replace: "Port {{ ssh_port }}" }
+    - { regexp: "#SyslogFacility", replace: "SyslogFacility" }
+    - { regexp: "#LogLevel", replace: "LogLevel" }
+    - { regexp: "#PubkeyAuthentication", replace: "PubkeyAuthentication" }
 
 - name: Restart service ssh
   ansible.builtin.service:

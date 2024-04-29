@@ -1,6 +1,6 @@
 - name: Update debian packages with apt
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
 
 - name: Upgrade debian packages with apt
   ansible.builtin.apt:
@@ -19,3 +19,4 @@
     - cron
     - gzip
     - make
+    - ufw # Preventing weareinteractive.ufw

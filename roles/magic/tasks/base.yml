@@ -7,7 +7,7 @@
   ansible.builtin.git:
     repo: https://github.com/theobori-cafe/scripts
     dest: /usr/local/scripts/
-  when: scripts_dir.stat.exists == false
+  when: not scripts_dir.stat.exists
 
 - name: Install gobally the scripts
   ansible.builtin.shell: |

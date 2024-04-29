@@ -1,0 +1,5 @@
+main.yml name[play]
+roles/magic/tasks/backup.yml no-changed-when
+roles/magic/tasks/base.yml latest[git]
+roles/magic/tasks/base.yml no-changed-when
+roles/tor/tasks/main.yml no-changed-when

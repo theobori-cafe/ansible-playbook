@@ -11,7 +11,7 @@ services:
     volumes:
       - slapd_db:/var/lib/ldap
       - slapd_config:/etc/ldap/slapd.d
-   
+
     networks:
       - net
 

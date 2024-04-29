@@ -1,8 +1,8 @@
 version: '3'
-  
+
 services:
   privatebin:
-    image: privatebin/nginx-fpm-alpine 
+    image: privatebin/nginx-fpm-alpine
     container_name: privatebin
     read_only: true
     volumes:
@@ -12,7 +12,7 @@ services:
     restart: unless-stopped
 
 volumes:
-    data:
-    run:
-    nginx_tmp:
-    tmp:
+  data:
+  run:
+  nginx_tmp:
+  tmp:

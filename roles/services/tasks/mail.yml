@@ -8,7 +8,7 @@
     repo: https://github.com/mailcow/mailcow-dockerized
     dest: /usr/local/services/mailcow-dockerized
     version: master
-  when: mailcow_dockerized_dir.stat.exists == false
+  when: not mailcow_dockerized_dir.stat.exists
 
 - name: Install the mailcow service
   ansible.builtin.copy:
@@ -30,3 +30,4 @@
 
       [Install]
       WantedBy=multi-user.target
+    mode: "0644"

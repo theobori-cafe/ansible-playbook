@@ -7,11 +7,13 @@
   ansible.builtin.copy:
     src: fail2ban/jail.local
     dest: /etc/fail2ban
+    mode: "0644"
 
 - name: Copy the fail2ban Gitea configuration files
   ansible.builtin.copy:
     src: fail2ban/{{ item }}
     dest: /etc/fail2ban/{{ item }}
+    mode: "0755"
   loop:
     - jail.d/
     - filter.d/
@@ -20,4 +22,4 @@
   ansible.builtin.service:
     name: fail2ban
     state: restarted
-    enabled: yes
+    enabled: true

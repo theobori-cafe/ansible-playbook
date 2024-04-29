@@ -7,23 +7,24 @@
   ansible.builtin.file:
     path: $HOME/.config/fish
     state: directory
-    mode: 0755
-    recurse: yes
-  becomse: false
+    mode: "0755"
+  become: false
 
 - name: Copy the fish configuration directory
   ansible.builtin.copy:
     src: ../../common/files/fish
     dest: $HOME/.config
-    force: yes
-  becomse: false
+    force: true
+    mode: "0755"
+  become: false
 
 - name: Set fish as the default shell for the current user
-  ansible.builtin.shell: |
-    usermod --shell $(which fish) {{ ansible_ssh_user }}
+  ansible.builtin.user:
+    name: "{{ ansible_ssh_user }}"
+    shell: "{{ lookup('pipe', 'which fish') }}"
 
 - name: Set fish as the default shell for every user
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/default/useradd
     regexp: "SHELL="
     line: "SHELL=/usr/bin/fish"

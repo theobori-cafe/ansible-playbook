@@ -1,5 +1,7 @@
 # ☕ ansible-playbook
 
+[![ansible-lint](https://github.com/theobori/ansible-playbook/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/theobori/ansible-playbook/actions/workflows/ansible-lint.yml)
+
 An Ansible playbook used to deploy theobori.cafe on a Debian system
 
 ## 📖 How to build and run ?

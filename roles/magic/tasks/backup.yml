@@ -3,25 +3,31 @@
     name: golang
     state: present
 
-- name: Install dockerv
+- name: Check if dockerv does exist
+  ansible.builtin.shell: |
+    which dockerv
+  check_mode: false
+  changed_when: false
+  failed_when: which_dockerv.rc > 1
+  register: which_dockerv
+
+- name: Install and init dockerv
   ansible.builtin.shell: |
     go install github.com/theobori/dockerv@latest
-
-- name: Init dockerv
-  ansible.builtin.shell: |
     dockerv init
+  when: which_dockerv.rc > 1
 
 - name: Create the backup output directory
   ansible.builtin.file:
     path: /backup
     state: directory
-    mode: 0755
+    mode: "0755"
 
 - name: Create full backup script
   ansible.builtin.template:
     src: backup-full.j2
     dest: /usr/local/scripts/backup-full
-    mode: 0755
+    mode: "0755"
 
 - name: Creates a cron file for the daily full services backup
   ansible.builtin.cron:

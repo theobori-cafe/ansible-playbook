@@ -4,7 +4,7 @@
     state: present
 
 - name: Filling Tor configuration file (torrc)
-  ansible.builtin.blockinfile: 
+  ansible.builtin.blockinfile:
     state: present
     insertafter: EOF
     dest: /etc/tor/torrc
@@ -16,7 +16,7 @@
   ansible.builtin.service:
     name: tor
     state: restarted
-    enabled: yes
+    enabled: true
 
 - name: Store the Tor hostname
   ansible.builtin.shell: |

@@ -1,6 +1,6 @@
 - name: Include task files
-  include_tasks: "{{ task_name }}.yml"
-  loop: 
+  ansible.builtin.include_tasks: "{{ task_name }}.yml"
+  loop:
     - tmux
     - fish
   loop_control:
