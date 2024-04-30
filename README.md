@@ -57,10 +57,12 @@ And then add a rule for `ufw` that allow you SSH connections.
 - **`profile`**: Setup some default configuration for new users
 - **`security`**: Setup system security tools/services like ssh, knockd, etc.
 - **`shell`**: Setup a shell environment with fish + tmux
-- **`services`**: Setup the Systemd services
+- **`service`**: Meta role to setup a service
 - **`nginx`**: Setup NGINX for the differents services created from the **`services`** role
 - **`tor`**: Setup a tor hidden service for every services
 - **`magic`**: Setup the magic stuff, including shell scripts, cron jobs, etc. for backup and web server statistics reporting.
+- **service roles**: Each service role like **`gitea`** is based on the **`service`** role.
+
 
 ### Variables
 
@@ -92,7 +94,6 @@ And then add a rule for `ufw` that allow you SSH connections.
 - **`ldap_auth_services_bindpw`**: OpenLDAP bind password (should be encrypted)
 - **`ldap_auth_services_login_attrib`**: OpenLDAP login attribute cn
 
-
 #### Nextcloud
 - **`nextcloud_db_user`**: Nextcloud database user (should be encrypted)
 - **`nextcloud_db_password`**: Nextcloud database password (should be encrypted)
@@ -116,6 +117,12 @@ And then add a rule for `ufw` that allow you SSH connections.
 
 #### Self Service Password
 - **`ssp_secretkey`**: SSP secret key use to encrypt/decrypt the token (should be encrypted)
+
+#### Certbot
+- **`certbot_email`**: Email address used for certbot certificates (letsencrypt).
+
+#### Directory
+- **`base_dir`**: Base directory for each service.
 
 ## 🎉 Tasks
 - [x] Tor HTTP response security (with NGINX)
