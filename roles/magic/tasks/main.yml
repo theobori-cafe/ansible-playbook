@@ -3,6 +3,5 @@
   loop:
     - base
     - report
-    - backup
   loop_control:
     loop_var: task_name
