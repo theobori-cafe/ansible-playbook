@@ -5,6 +5,8 @@ services:
     container_name: duplicati
     image: lscr.io/linuxserver/duplicati:latest
     restart: unless-stopped
+    ports:
+      - "127.0.0.1:8200:8200"
     volumes:
       - "./config:/config"
       - "./backups:/backups"
