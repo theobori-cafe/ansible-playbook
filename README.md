@@ -55,14 +55,14 @@ And then add a rule for `ufw` that allow you SSH connections.
 - **`weareinteractive.ufw`**: Setup the firewall and configure it
 - **`base`**: Install basics needed packages for the other roles
 - **`profile`**: Setup some default configuration for new users
-- **`security`**: Setup system security tools/services like ssh, knockd, etc.
+- **`security`**: Setup system security tools/services like ssh, knockd, etc
 - **`shell`**: Setup a shell environment with fish + tmux
 - **`service`**: Meta role to setup a service
 - **`nginx`**: Setup NGINX for the differents services created from the **`services`** role
 - **`tor`**: Setup a tor hidden service for every services
 - **`magic`**: Setup the magic stuff, including shell scripts, cron jobs, etc. for backup and web server statistics reporting.
-- **service roles**: Each service role like **`gitea`** is based on the **`service`** role.
-
+- **service roles**: Each service role like **`gitea`** is based on the **`service`** role
+- **`monitoring`**: Setup the monitoring stack based on Prometheus and Grafana
 
 ### Variables
 

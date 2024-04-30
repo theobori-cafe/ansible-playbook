@@ -1,0 +1,13 @@
+- name: Include service role
+  ansible.builtin.include_role:
+    name: "service"
+  vars:
+    service_name: "monitoring"
+    service_docker_compose: true
+    service_systemd_service: true
+
+- name: Copy Prometheus configuration file
+  ansible.builtin.copy:
+    src: "prometheus.yml"
+    dest: "{{ base_dir }}/monitoring/prometheus.yml"
+    mode: "0644"

@@ -114,6 +114,9 @@
     - role: uptime_kuma
       tags: uptime_kuma
 
+    - role: monitoring
+      tags: monitoring
+
     - role: vitalk.secure-ssh
       tags: ssh
       ssh_user: "{{ ansible_ssh_user }}"
