@@ -2,116 +2,117 @@
 - hosts: all
   become: true
   roles:
-    - role: base
-      tags: base
+    # - role: base
+    #   tags: base
 
-    - role: nickjj.docker
-      tags: ["docker"]
-      docker__users: [
-        "{{ ansible_ssh_user }}"
-      ]
-      ignore_errors: true
+    # - role: nickjj.docker
+    #   tags: ["docker"]
+    #   docker__users: [
+    #     "{{ ansible_ssh_user }}"
+    #   ]
+    #   ignore_errors: true
 
-    - role: weareinteractive.ufw
-      tags: ufw
-      ufw_enabled: true
-      ufw_packages: ["ufw"]
-      ufw_rules:
-        - logging: "full"
-        - rule: allow
-          to_port: '443'
-        - rule: allow
-          to_port: '80'
-        - rule: allow
-          to_port: '25'
-        - rule: allow
-          to_port: '110'
-        - rule: allow
-          to_port: '143'
-        - rule: allow
-          to_port: '465'
-        - rule: allow
-          to_port: '587'
-        - rule: allow
-          to_port: '993'
-        # Gitea SSH exception
-        - rule: allow
-          to_port: '22'
-        - rule: allow
-          to_port: '995'
-        - rule: allow
-          to_port: '4190'
-          proto: tcp
-        # Delete default rule
-        - rule: allow
-          name: Anywhere
-          delete: true
-      ufw_manage_config: true
-      ufw_config:
-        IPV6: "true"
-        DEFAULT_INPUT_POLICY: DROP
-        DEFAULT_OUTPUT_POLICY: ACCEPT
-        DEFAULT_FORWARD_POLICY: DROP
-        DEFAULT_APPLICATION_POLICY: SKIP
-        MANAGE_BUILTINS: "no"
-        IPT_SYSCTL: /etc/ufw/sysctl.conf
-        IPT_MODULES: ""
+    # - role: weareinteractive.ufw
+    #   tags: ufw
+    #   ufw_enabled: true
+    #   ufw_packages: ["ufw"]
+    #   ufw_rules:
+    #     - logging: "full"
+    #     - rule: allow
+    #       to_port: '443'
+    #     - rule: allow
+    #       to_port: '80'
+    #     - rule: allow
+    #       to_port: '25'
+    #     - rule: allow
+    #       to_port: '110'
+    #     - rule: allow
+    #       to_port: '143'
+    #     - rule: allow
+    #       to_port: '465'
+    #     - rule: allow
+    #       to_port: '587'
+    #     - rule: allow
+    #       to_port: '993'
+    #     # Gitea SSH exception
+    #     - rule: allow
+    #       to_port: '22'
+    #     - rule: allow
+    #       to_port: '995'
+    #     - rule: allow
+    #       to_port: '4190'
+    #       proto: tcp
+    #     # Delete default rule
+    #     - rule: allow
+    #       name: Anywhere
+    #       delete: true
+    #   ufw_manage_config: true
+    #   ufw_config:
+    #     IPV6: "true"
+    #     DEFAULT_INPUT_POLICY: DROP
+    #     DEFAULT_OUTPUT_POLICY: ACCEPT
+    #     DEFAULT_FORWARD_POLICY: DROP
+    #     DEFAULT_APPLICATION_POLICY: SKIP
+    #     MANAGE_BUILTINS: "no"
+    #     IPT_SYSCTL: /etc/ufw/sysctl.conf
+    #     IPT_MODULES: ""
 
-    - role: shell
-      tags: shell
+    # - role: shell
+    #   tags: shell
 
-    - role: profile
-      tags: profile
+    # - role: profile
+    #   tags: profile
 
-    - role: geerlingguy.certbot
-      tags: certbot
-      vars:
-        certbot_install_method: package
-        certbot_auto_renew: true
-        certbot_auto_renew_user: "{{ ansible_user | default(lookup('env', 'USER')) }}"
-        certbot_auto_renew_hour: "3"
-        certbot_auto_renew_minute: "30"
-        certbot_create_if_missing: true
-        certbot_admin_email: nagi@tilde.team
-
-      certbot_certs:
-        - domains:
-            - mail.{{ fqdn }}
-        - domains:
-            - news.{{ fqdn }}
-        - domains:
-            - cringe.{{ fqdn }}
-        - domains:
-            - status.{{ fqdn }}
-        - domains:
-            - search.{{ fqdn }}
-        - domains:
-            - etherpad.{{ fqdn }}
-        - domains:
-            - cloud.{{ fqdn }}
-        - domains:
-            - password.{{ fqdn }}
-        - domains:
-            - services.{{ fqdn }}
-        - domains:
-            - bin.{{ fqdn }}
-        - domains:
-            - books.{{ fqdn }}
-        - domains:
-            - "{{ fqdn }}"
-            - www.{{ fqdn }}
-
-    - role: services
-      tags: services
-
-    - role: magic
-      tags: magic
+    # - role: magic
+    #   tags: magic
 
     - role: nginx
       tags: nginx
 
     - role: tor
       tags: tor
+
+    - role: calibre_web
+      tags: calibre_web
+
+    - role: duplicati
+      tags: duplicati
+
+    - role: etherpad
+      tags: etherpad
+
+    - role: gitea
+      tags: gitea
+
+    - role: etherpad
+      tags: etherpad
+
+    - role: nextcloud
+      tags: nextcloud
+
+    - role: personal_website
+      tags: personal_website
+
+    - role: private_bin
+      tags: private_bin
+
+    - role: proxitok
+      tags: proxitok
+
+    - role: searxng
+      tags: searxng
+
+    - role: personal_services
+      tags: personal_services
+
+    - role: ssp
+      tags: ssp
+
+    - role: tt_rss
+      tags: tt_rss
+
+    - role: uptime_kuma
+      tags: uptime_kuma
 
     - role: vitalk.secure-ssh
       tags: ssh

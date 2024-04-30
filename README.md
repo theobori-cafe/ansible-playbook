@@ -75,7 +75,7 @@ And then add a rule for `ufw` that allow you SSH connections.
 - **`knockd_opts`**: knockd CLI arguments used by the service
 
 #### Domain
-- **`fqdn`**: The server FQDN, must be formatted as "domain.tld"
+- **`domain`**: The server domain, must be formatted as "domain.tld"
 
 #### Etherpad
 - **`etherpad_db_user`**: Etherpad database username (should be encrypted)

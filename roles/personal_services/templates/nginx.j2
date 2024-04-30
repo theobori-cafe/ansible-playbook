@@ -1,0 +1,24 @@
+server {
+  include listen-443;
+  server_name {{ server_name }};
+  
+  include ssl_params;
+  ssl_certificate /etc/letsencrypt/live/{{ server_name }}/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/{{ server_name }}/privkey.pem;
+  
+  sub_filter_once off;
+  sub_filter f5d66ae47dbd10d6c945c247dabf728a3d47441b2f1dc294396dbfd956561a34 $ssl_session_id;
+
+  include header_params;
+  
+  location /report {
+    alias /report;
+  }
+
+  location / {
+    include proxy_params;
+    add_header Content-Security-Policy "default-src 'none'; manifest-src 'self'; font-src 'self' https:; style-src 'self' 'unsafe-hashes' 'sha256-rV9I2X3m+USubUYRTavlYrp7o/qO7hN5BS/JKHv32hY=' 'nonce-$ssl_session_id'; media-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'; style-src-elem 'self' 'unsafe-inline' https:; img-src 'self' https:; script-src 'self'; script-src-elem 'self' 'nonce-$ssl_session_id' https:; connect-src 'self'";
+    
+    proxy_pass http://localhost:{{ server_port }}/;
+  }
+}

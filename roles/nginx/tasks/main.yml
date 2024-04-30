@@ -21,31 +21,11 @@
     dest: /etc/nginx/
     mode: "0755"
 
-- name: Copy the NGINX SSL parameters file
+- name: Copy the NGINX TLS/SSL parameters file
   ansible.builtin.template:
     src: ssl_params.j2
     dest: /etc/nginx/ssl_params
     mode: "0644"
-
-- name: Install services NGINX configuration files
-  ansible.builtin.template:
-    src: "sites-available/{{ item.filename }}.j2"
-    dest: "/etc/nginx/sites-available/{{ item.name }}"
-    mode: "0644"
-  with_items:
-    - { filename: "etherpad", name: "etherpad.{{ fqdn }}", port: "9001" }
-    - { filename: "search", name: "search.{{ fqdn }}", port: "8080" }
-    - { filename: "proxitok", name: "cringe.{{ fqdn }}", port: "8081" }
-    - { filename: "mail", name: "mail.{{ fqdn }}", port: "8181" }
-    - { filename: "status", name: "status.{{ fqdn }}", port: "3001" }
-    - { filename: "cloud", name: "cloud.{{ fqdn }}", port: "8000" }
-    - { filename: "tt-rss", name: "news.{{ fqdn }}", port: "8280" }
-    - { filename: "website", name: "{{ fqdn }}", port: "3000" }
-    - { filename: "gitea", name: "git.{{ fqdn }}", port: "3002" }
-    - { filename: "ssp", name: "password.{{ fqdn }}", port: "3003" }
-    - { filename: "services", name: "services.{{ fqdn }}", port: "1313" }
-    - { filename: "privatebin", name: "bin.{{ fqdn }}", port: "3004" }
-    - { filename: "calibre-web", name: "books.{{ fqdn }}", port: "8083" }
 
 - name: Install the default NGINX configuration file
   ansible.builtin.copy:
@@ -59,31 +39,14 @@
       }
     mode: "0644"
 
-- name: Create symlinks
+- name: Create NGINX default symlink
   ansible.builtin.file:
-    src: "/etc/nginx/sites-available/{{ service_name }}"
-    dest: "/etc/nginx/sites-enabled/{{ service_name }}"
+    src: "/etc/nginx/sites-available/default"
+    dest: "/etc/nginx/sites-enabled/default"
     state: link
     force: true
     follow: false
     mode: "0644"
-  loop:
-    - etherpad.{{ fqdn }}
-    - search.{{ fqdn }}
-    - cringe.{{ fqdn }}
-    - status.{{ fqdn }}
-    - mail.{{ fqdn }}
-    - cloud.{{ fqdn }}
-    - news.{{ fqdn }}
-    - git.{{ fqdn }}
-    - password.{{ fqdn }}
-    - "{{ fqdn }}"
-    - "services.{{ fqdn }}"
-    - "bin.{{ fqdn }}"
-    - "books.{{ fqdn }}"
-    - default
-  loop_control:
-    loop_var: service_name
 
 - name: Restart service NGINX
   ansible.builtin.service:

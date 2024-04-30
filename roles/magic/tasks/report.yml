@@ -29,7 +29,7 @@
       # Output final file
       readonly OUTPUT=${OUTPUT_DIR}/index.html
       # Grep Regex
-      readonly GREP_RE='^(\d+\.\d+\.\d+\.\d+) - (?:[a-zA-Z0-9-]+\.)*{{ fqdn }}'
+      readonly GREP_RE='^(\d+\.\d+\.\d+\.\d+) - (?:[a-zA-Z0-9-]+\.)*{{ domain }}'
 
       # Create the output subdir
       mkdir -p ${OUTPUT_DIR}

@@ -2,7 +2,7 @@ ssl_session_timeout 1d;
 ssl_session_tickets off;
 ssl_stapling on;
 ssl_stapling_verify on;
-ssl_trusted_certificate /etc/letsencrypt/live/{{ fqdn }}/fullchain.pem;
+ssl_trusted_certificate /etc/letsencrypt/live/{{ domain }}/fullchain.pem;
 
 resolver_timeout 5s;
 resolver 1.1.1.1;

@@ -1,0 +1,12 @@
+- name: Include service role
+  ansible.builtin.include_role:
+    name: "service"
+  vars:
+    service_name: "proxitok"
+    service_fqdn: "cringe.{{ domain }}"
+    service_nginx_port: "8081"
+    service_docker_compose: true
+    service_systemd_service: true
+    service_certbot: true
+    service_nginx: true
+    service_tor: true

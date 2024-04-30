@@ -1,0 +1,30 @@
+- name: Include service role
+  ansible.builtin.include_role:
+    name: "service"
+  vars:
+    service_name: "tt-rss"
+    service_fqdn: "news.{{ domain }}"
+    service_nginx_port: "8280"
+    service_certbot: true
+    service_nginx: true
+    service_tor: false
+    service_docker_compose: true
+    service_systemd_service: true
+
+- name: Create the tt-rss config.d directory if not exists
+  ansible.builtin.file:
+    path: "{{ base_dir }}/tt-rss/config.d"
+    state: directory
+    mode: "0755"
+
+- name: Copy the tt-rss LDAP configuration PHP file
+  ansible.builtin.template:
+    src: config.d/ldap.php.j2
+    dest: "{{ base_dir }}/tt-rss/config.d/ldap.php"
+    mode: "0644"
+
+- name: Copy tt-rss environment files
+  ansible.builtin.template:
+    src: ".env.j2"
+    dest: "{{ base_dir }}/tt-rss/.env"
+    mode: "0640"

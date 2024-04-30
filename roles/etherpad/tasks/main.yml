@@ -1,0 +1,18 @@
+- name: Include service role
+  ansible.builtin.include_role:
+    name: "service"
+  vars:
+    service_name: "etherpad"
+    service_fqdn: "etherpad.{{ domain }}"
+    service_nginx_port: "9001"
+    service_certbot: true
+    service_nginx: true
+    service_tor: true
+    service_docker_compose: true
+    service_systemd_service: true
+
+- name: Copy etherpad environment files
+  ansible.builtin.template:
+    src: ".env.j2"
+    dest: "{{ base_dir }}/etherpad/.env"
+    mode: "0640"

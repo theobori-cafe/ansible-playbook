@@ -1,0 +1,19 @@
+server {
+  include listen-443;
+  server_name {{ server_name }};
+  
+  include ssl_params;
+  ssl_certificate /etc/letsencrypt/live/{{ server_name }}/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/{{ server_name }}/privkey.pem;
+  
+  include header_params;
+  add_header Content-Security-Policy "default-src 'none'; frame-src 'self'; img-src 'self'; connect-src 'self'; script-src 'self'; script-src-elem 'self' 'unsafe-hashes' 'sha256-G764Ehuv9OrkATn9BPjICYyjohQ5PhingRM8o3JVb+Q='; style-src 'self'; style-src-elem 'self' 'unsafe-hashes' 'sha256-MKfAmo6ieJOikoQe7XsBsQFmS6WBXPV3/joHyYJ3o3I='; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'self'";
+
+  location / {
+    include proxy_params;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Host $host;
+
+    proxy_pass http://localhost:{{ server_port }}/;
+  }
+}

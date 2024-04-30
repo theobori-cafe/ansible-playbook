@@ -9,7 +9,7 @@
     insertafter: EOF
     dest: /etc/tor/torrc
     content: |
-      HiddenServiceDir /var/lib/tor/{{ fqdn }}/
+      HiddenServiceDir /var/lib/tor/{{ domain }}/
       HiddenServicePort 80 {{ tor_unix_socket }}
 
 - name: Restart service Tor
@@ -17,42 +17,3 @@
     name: tor
     state: restarted
     enabled: true
-
-- name: Store the Tor hostname
-  ansible.builtin.shell: |
-    cat /var/lib/tor/{{ fqdn }}/hostname
-  register: tor_hostname
-
-- name: Display the Tor hostname
-  ansible.builtin.debug:
-    msg: "{{ tor_hostname.stdout }}"
-  when: tor_hostname is defined
-
-- name: Configure NGINX for Tor hidden servives (subdomains)
-  ansible.builtin.shell: |
-    grep "listen {{ tor_unix_socket }};" "/etc/nginx/sites-available/{{ item }}" && exit 0
-
-    sed \
-      -i "/etc/nginx/sites-available/{{ item }}"\
-      -e "/^server {/a \  listen {{ tor_unix_socket }};" \
-    {% if item == fqdn %}
-      -e "s/server_name www.{{ item }} {{ item }};/server_name www.{{ item }} {{ item }} {{ tor_hostname.stdout }};/" \
-    {% else %}
-      -e "s/server_name {{ item }};/server_name {{ item }} {{ item | split('.') | first }}.{{ tor_hostname.stdout }};/" \
-    {% endif %}
-
-  # Tor may cause some troubles with CSPs
-
-  loop:
-    - "search.{{ fqdn }}"
-    - "cringe.{{ fqdn }}"
-    - "mail.{{ fqdn }}"
-    - "status.{{ fqdn }}"
-    - "cloud.{{ fqdn }}"
-    - "news.{{ fqdn }}"
-    - "{{ fqdn }}"
-    - "git.{{ fqdn }}"
-    - "password.{{ fqdn }}"
-    - "services.{{ fqdn }}"
-    - "bin.{{ fqdn }}"
-    - "books.{{ fqdn }}"

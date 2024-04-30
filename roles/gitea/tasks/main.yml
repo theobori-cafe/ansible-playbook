@@ -1,0 +1,20 @@
+- name: Include service role
+  ansible.builtin.include_role:
+    name: "service"
+  vars:
+    service_name: "gitea"
+    service_fqdn: "git.{{ domain }}"
+    service_nginx_port: "3002"
+    service_docker_compose: true
+    service_systemd_service: true
+    service_certbot: true
+    service_nginx: true
+    service_tor: true
+
+- name: Create the Gitea log directory if not exists
+  ansible.builtin.file:
+    path: /usr/local/services/gitea/log
+    state: directory
+    owner: "1000"
+    group: "1000"
+    mode: "0755"

@@ -1,0 +1,12 @@
+- name: Include service role
+  ansible.builtin.include_role:
+    name: "service"
+  vars:
+    service_name: "uptime-kuma"
+    service_fqdn: "status.{{ domain }}"
+    service_nginx_port: "3001"
+    service_certbot: true
+    service_nginx: true
+    service_tor: true
+    service_docker_compose: true
+    service_systemd_service: true

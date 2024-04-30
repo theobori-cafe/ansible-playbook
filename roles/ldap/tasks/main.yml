@@ -1,0 +1,13 @@
+- name: Include service role
+  ansible.builtin.include_role:
+    name: "service"
+  vars:
+    service_docker_compose: true
+    service_systemd_service: true
+    service_name: "ldap"
+
+- name: Copy ldap environment files
+  ansible.builtin.template:
+    src: ".env.j2"
+    dest: "{{ base_dir }}/ldap/.env"
+    mode: "0640"
