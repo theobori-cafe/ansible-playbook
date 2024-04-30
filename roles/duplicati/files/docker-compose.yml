@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  duplicati:
+    container_name: duplicati
+    image: lscr.io/linuxserver/duplicati:latest
+    restart: unless-stopped
+    volumes:
+      - "./config:/config"
+      - "./backups:/backups"
+      - "/:/source"
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Etc/UTC

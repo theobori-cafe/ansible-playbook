@@ -1,0 +1,7 @@
+- name: Include service role
+  ansible.builtin.include_role:
+    name: "service"
+  vars:
+    service_name: "duplicati"
+    service_docker_compose: true
+    service_systemd_service: true
