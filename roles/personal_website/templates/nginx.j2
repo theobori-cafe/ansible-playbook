@@ -9,7 +9,12 @@ server {
   sub_filter_once off;
   sub_filter Fg4i6piWbxQWdgGv66UX1V1B5zwNWL4Om8vSTS4QG4I $ssl_session_id;
   
-  include header_params;
+  add_header Strict-Transport-Security "max-age=63072000" always;
+  add_header X-XSS-Protection "1; mode=block";
+  add_header X-Content-Type-Options "nosniff";
+  add_header Referrer-Policy "strict-origin";
+  add_header Permissions-Policy "microphone=(), geolocation=()";
+  add_header X-Frame-Options "DENY";
   add_header Content-Security-Policy "default-src 'none'; font-src 'self'; style-src 'self'; media-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'; style-src-elem 'self' 'nonce-$ssl_session_id'; img-src 'self' https:; script-src 'self' 'unsafe-hashes' 'sha256-2daR3BDHUgNt2bWp/u+3CNDJtsIDrpz+22+QPnNNS5c='; connect-src 'self'";
 
   location / {
