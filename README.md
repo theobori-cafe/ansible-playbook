@@ -61,7 +61,7 @@ And then add a rule for `ufw` that allow you SSH connections.
 - **`nginx`**: Setup NGINX for the differents services created from the **`services`** role.
 - **`tor`**: Setup a tor hidden service for every services.
 - **`magic`**: Setup the magic stuff, including shell scripts, cron jobs, etc. for backup and web server statistics reporting.
-- **service roles**: Each service role like **`gitea`** is based on the **`service`** role.
+- **`service roles`**: Each service role like **`gitea`** is based on the **`service`** role.
 - **`monitoring`**: Setup the monitoring stack based on Prometheus and Grafana.
 
 ### Variables
