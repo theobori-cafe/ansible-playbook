@@ -10,3 +10,9 @@
     service_tor: true
     service_docker_compose: true
     service_systemd_service: true
+
+- name: Copy ssp environment file
+  ansible.builtin.template:
+    src: ".env.j2"
+    dest: "{{ base_dir }}/ssp/.env"
+    mode: "0640"
