@@ -1,0 +1,3 @@
+gitea_db_root_password: "gitea_db_root_password"
+gitea_db_user: "gitea_db_user"
+gitea_db_password: "gitea_db_password"

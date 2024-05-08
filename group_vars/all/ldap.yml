@@ -1,0 +1,5 @@
+ldap_admin_password: "ldap_admin_password"
+ldap_auth_services_basedn: "ldap_auth_services_basedn"
+ldap_auth_services_binddn: "ldap_auth_services_binddn"
+ldap_auth_services_bindpw: "ldap_auth_services_bindpw"
+ldap_auth_services_login_attrib: "ldap_auth_services_login_attrib"

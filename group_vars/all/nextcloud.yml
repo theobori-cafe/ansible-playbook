@@ -1,0 +1,4 @@
+nextcloud_db_user: "nextcloud_db_user"
+nextcloud_db_password: "nextcloud_db_password"
+nextcloud_db_root_password: "nextcloud_db_root_password"
+nextcloud_redis_password: "nextcloud_redis_password"

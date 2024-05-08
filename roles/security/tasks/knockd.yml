@@ -1,0 +1,25 @@
+- name: Install knockd
+  ansible.builtin.package:
+    name: knockd
+    state: present
+
+- name: Copy the knockd configuration file
+  ansible.builtin.template:
+    src: knockd.conf.j2
+    dest: /etc/knockd.conf
+    mode: "0644"
+
+- name: Override the knockd additionnal default configuration file
+  ansible.builtin.replace:
+    path: /etc/default/knockd
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  loop:
+    - { regexp: '^#KNOCKD_OPTS="\-i eth1"', replace: 'KNOCKD_OPTS="{{ knockd_opts }}"' }
+    - { regexp: '^START_KNOCKD=0', replace: 'START_KNOCKD=1' }
+
+- name: Restart service knockd
+  ansible.builtin.service:
+    name: knockd
+    state: restarted
+    enabled: true

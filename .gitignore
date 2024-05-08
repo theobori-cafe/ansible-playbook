@@ -1,2 +1,5 @@
 inventory.yml
 .vault_pass
+
+my_vars.yml
+my_playbook.yml

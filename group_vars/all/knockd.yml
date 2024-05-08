@@ -1,0 +1,4 @@
+knockd_open_ssh_seq: "knockd_open_ssh_seq"
+knockd_tmp_open_ssh_seq: "knockd_tmp_open_ssh_seq"
+knockd_close_ssh_seq: "knockd_close_ssh_seq"
+knockd_opts: "-i eth0"
