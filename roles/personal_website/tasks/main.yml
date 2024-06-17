@@ -22,6 +22,8 @@
     certbot_auto_renew_minute: "30"
     certbot_create_if_missing: true
     certbot_admin_email: "{{ certbot_email }}"
+    certbot_use_staging: false
+    certbot_create_extra_args: ""
 
     certbot_certs:
       - domains:

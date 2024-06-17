@@ -24,7 +24,7 @@
       [Service]
       Restart=on-failure
 
-      WorkingDirectory=/usr/local/services/{{ service_name }}
+      WorkingDirectory={{ base_dir }}/{{ service_name }}
 
       ExecStart=docker compose up --build
       ExecStop=docker compose down --remove-orphans
@@ -45,10 +45,14 @@
     certbot_auto_renew_minute: "30"
     certbot_create_if_missing: true
     certbot_admin_email: "{{ certbot_email }}"
+    certbot_use_staging: false
 
     certbot_certs:
       - domains:
           - "{{ service_fqdn }}"
+
+    certbot_create_extra_args: ""
+
   when: service_certbot
 
 - name: "Create NGINX configuration files for {{ service_name }}"
@@ -99,3 +103,10 @@
   when:
     - service_tor
     - tor_hostname is defined
+
+- name: Restart service NGINX
+  ansible.builtin.service:
+    name: nginx
+    state: restarted
+    enabled: true
+  when: service_nginx

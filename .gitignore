@@ -3,3 +3,5 @@ inventory.yml
 
 my_vars.yml
 my_playbook.yml
+
+.vscode
