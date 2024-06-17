@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  linkstack:
+    image: linkstackorg/linkstack
+    container_name: linkstack
+    hostname: linkstack
+    env_file: .env
+    ports:
+      - "127.0.0.1:8880:80"
+    restart: unless-stopped
+    volumes:
+      - linkstack:/htdocs
+
+volumes:
+  linkstack:

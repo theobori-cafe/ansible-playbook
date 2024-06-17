@@ -117,6 +117,9 @@
     - role: monitoring
       tags: monitoring
 
+    - role: linkstack
+      tags: linkstack
+
     - role: vitalk.secure-ssh
       tags: ssh
       ssh_user: "{{ ansible_ssh_user }}"

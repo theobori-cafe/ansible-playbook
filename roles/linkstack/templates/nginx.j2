@@ -6,10 +6,17 @@ server {
   ssl_certificate /etc/letsencrypt/live/{{ server_name }}/fullchain.pem;
   ssl_certificate_key /etc/letsencrypt/live/{{ server_name }}/privkey.pem;
   
-  add_header Strict-Transport-Security "max-age=63072000" always;
-
+  include header_params;
+  
   location / {
     include proxy_params;
+
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Host $host;
+
+    # Fixes Mixed Content errors.
+    add_header 'Content-Security-Policy' 'upgrade-insecure-requests';
+
     proxy_pass http://127.0.0.1:{{ server_port }}/;
   }
 }
