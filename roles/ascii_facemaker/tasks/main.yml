@@ -1,0 +1,11 @@
+- name: Include service role
+  ansible.builtin.include_role:
+    name: "service"
+  vars:
+    service_name: "ascii-facemaker"
+    service_fqdn: "ascii-facemaker.{{ domain }}"
+    service_nginx_port: "9999"
+    service_certbot: true
+    service_nginx: true
+    service_docker_compose: true
+    service_systemd_service: true

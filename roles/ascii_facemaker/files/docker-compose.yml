@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  linkstack:
+    image: theobori/ascii-facemaker:1.0
+    container_name: ascii-facemaker
+    ports:
+      - "127.0.0.1:9999:80"
+    restart: unless-stopped

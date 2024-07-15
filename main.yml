@@ -120,6 +120,9 @@
     - role: linkstack
       tags: linkstack
 
+    - role: ascii_facemaker
+      tags: ascii_facemaker
+
     - role: vitalk.secure-ssh
       tags: ssh
       ssh_user: "{{ ansible_ssh_user }}"
