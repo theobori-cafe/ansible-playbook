@@ -1,10 +1,10 @@
-# ☕ ansible-playbook
+# My Debian deployment with Ansible playbook
 
 [![ansible-lint](https://github.com/theobori-cafe/ansible-playbook/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/theobori-cafe/ansible-playbook/actions/workflows/ansible-lint.yml)
 
-An Ansible playbook used to deploy theobori.cafe on a Debian system
+This GitHub repository contains Ansible resources to deploy all of my services on a Debian system.
 
-## 📖 How to build and run ?
+## Recommendations for launching deployment
 
 1. Install the dependencies 
    - ansible
@@ -29,7 +29,7 @@ ansible-playbook \
    main.yml
 ```
 
-Some services are not restarted at runtime on purpose, because they need administrator configuration like `Uptime-Kuma` or `Nextcloud`. If you want to access them, you should do a SSH bridge with OpenSSH.
+Some services are not restarted at runtime on purpose, because they need administrator configuration like `Uptime-Kuma` or `Nextcloud`. If you want to access them, you should do a SSH bridge with OpenSSH like below.
 
 ```sh
 ssh \
@@ -37,7 +37,7 @@ ssh \
    -f ssh_user@ssh_server
 ```
 
-## ⚠️ knockd risks
+## The knockd risks
 
 In this configuration, we are using `knockd` to manage the openSSH firewall (`ufw`) rules. It can be very risky. If you want to be safe you can exclude the `knockd` task by commenting the following line in [roles/security/tasks/main.yml](roles/security/tasks/main.yml):
 
@@ -47,7 +47,7 @@ In this configuration, we are using `knockd` to manage the openSSH firewall (`uf
 
 And then add a rule for `ufw` that allow you SSH connections.
 
-## ℹ️ Roles and variables
+## Roles and variables
 
 ### Roles
 
@@ -124,6 +124,6 @@ And then add a rule for `ufw` that allow you SSH connections.
 #### Directory
 - **`base_dir`**: Base directory for each service.
 
-## 🎉 Tasks
-- [x] Tor HTTP response security (with NGINX)
-- [x] Backup and web server statistics
+## Potential improvements
+
+One potential improvement is to upload my customized Docker images to public container image registries so that they can be retrieved from the Debian system.

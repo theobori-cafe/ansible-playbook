@@ -5,3 +5,5 @@ my_vars.yml
 my_playbook.yml
 
 .vscode
+.ansible
+.direnv
