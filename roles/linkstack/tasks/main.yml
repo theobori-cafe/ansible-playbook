@@ -1,4 +1,4 @@
-- name: Set task locally the Linkstack service name fact (used as variable)
+- name: Set the Linkstack service name fact (used as variable)
   ansible.builtin.set_fact:
     linkstack_service_name: "linkstack"
 

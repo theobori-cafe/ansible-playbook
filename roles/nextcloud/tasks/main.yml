@@ -1,4 +1,4 @@
-- name: Set task locally the Nextcloud service name fact (used as variable)
+- name: Set the Nextcloud service name fact (used as variable)
   ansible.builtin.set_fact:
     nextcloud_service_name: "nextcloud"
 

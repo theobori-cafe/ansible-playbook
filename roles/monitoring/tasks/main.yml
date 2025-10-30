@@ -1,4 +1,4 @@
-- name: Set task locally the monitoring service name fact (used as variable)
+- name: Set the monitoring service name fact (used as variable)
   ansible.builtin.set_fact:
     monitoring_service_name: "monitoring"
 

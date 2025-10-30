@@ -1,4 +1,4 @@
-- name: Set task locally the Etherpad service name fact (used as variable)
+- name: Set the Etherpad service name fact (used as variable)
   ansible.builtin.set_fact:
     etherpad_service_name: "etherpad"
 

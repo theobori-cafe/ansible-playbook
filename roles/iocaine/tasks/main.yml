@@ -1,4 +1,4 @@
-- name: Set task locally the iocaine service name fact (used as variable)
+- name: Set the iocaine service name fact (used as variable)
   ansible.builtin.set_fact:
     iocaine_service_name: "iocaine"
 
@@ -18,26 +18,26 @@
 
 - name: Download texts and a wordlist for iocaine with sha256 checksum verification
   ansible.builtin.get_url:
-    url: "{{ item.https_url  }}"
-    dest: "{{ base_dir }}/{{ iocaine_service_name}}/data/{{ item.filename }}"
+    url: "{{ item.https_url }}"
+    dest: "{{ base_dir }}/{{ iocaine_service_name }}/data/{{ item.filename }}"
     checksum: "sha256:{{ item.sha256sum }}"
     mode: "0644"
   loop:
     - {
-        https_url: "https://archive.org/download/GeorgeOrwells1984/1984_djvu.txt",
-        filename: "text1.txt",
-        sha256sum: "f51d4f4daf320ed91f1fee2b539045eb679eef78ab85ddd5617d50079294f995"
-      }
+      https_url: "https://archive.org/download/GeorgeOrwells1984/1984_djvu.txt",
+      filename: "text1.txt",
+      sha256sum: "f51d4f4daf320ed91f1fee2b539045eb679eef78ab85ddd5617d50079294f995"
+    }
     - {
-        https_url: "https://archive.org/download/ost-english-brave_new_world_aldous_huxley/Brave_New_World_Aldous_Huxley_djvu.txt",
-        filename: "text2.txt",
-        sha256sum: "e9691a3bfdf34087b31b3243a784238258a4893653c60a343f83047dfda675c6"
-      }
+      https_url: "https://archive.org/download/ost-english-brave_new_world_aldous_huxley/Brave_New_World_Aldous_Huxley_djvu.txt",
+      filename: "text2.txt",
+      sha256sum: "e9691a3bfdf34087b31b3243a784238258a4893653c60a343f83047dfda675c6"
+    }
     - {
-        https_url: "https://git.savannah.gnu.org/cgit/miscfiles.git/plain/web2",
-        filename: "words.txt",
-        sha256sum: "2929895ab3fec78c6963ebe5cbb3493fe4fc9e11eba095a522787b8afc53a863"
-      }
+      https_url: "https://git.savannah.gnu.org/cgit/miscfiles.git/plain/web2",
+      filename: "words.txt",
+      sha256sum: "2929895ab3fec78c6963ebe5cbb3493fe4fc9e11eba095a522787b8afc53a863"
+    }
 
 - name: Copy NGINX additional configuration for {{ iocaine_service_name }}
   ansible.builtin.copy:
