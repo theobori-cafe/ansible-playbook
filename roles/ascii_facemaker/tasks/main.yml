@@ -1,11 +1,11 @@
 - name: Include service role
   ansible.builtin.include_role:
-    name: "service"
+    name: "meta_service"
   vars:
-    service_name: "ascii-facemaker"
-    service_fqdn: "ascii-facemaker.{{ domain }}"
-    service_nginx_port: "9999"
-    service_certbot: true
-    service_nginx: true
-    service_docker_compose: true
-    service_systemd_service: true
+    meta_service_name: "ascii-facemaker"
+    meta_service_fqdn: "ascii-facemaker.{{ domain }}"
+    meta_service_nginx_port: "9999"
+    meta_service_certbot: true
+    meta_service_nginx: true
+    meta_service_docker_compose: true
+    meta_service_systemd_service: true

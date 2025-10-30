@@ -4,11 +4,11 @@
 
 - name: Include service role
   ansible.builtin.include_role:
-    name: "service"
+    name: "meta_service"
   vars:
-    service_docker_compose: true
-    service_systemd_service: true
-    service_name: "{{ ldap_service_name }}"
+    meta_service_docker_compose: true
+    meta_service_systemd_service: true
+    meta_service_name: "{{ ldap_service_name }}"
 
 - name: Copy ldap environment files
   ansible.builtin.template:

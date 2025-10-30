@@ -1,5 +1,0 @@
-service_docker_compose: false
-service_systemd_service: false
-service_certbot: false
-service_nginx: false
-service_tor: false

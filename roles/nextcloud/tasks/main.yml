@@ -4,16 +4,16 @@
 
 - name: Include service role
   ansible.builtin.include_role:
-    name: "service"
+    name: "meta_service"
   vars:
-    service_name: "{{ nextcloud_service_name }}"
-    service_fqdn: "cloud.{{ domain }}"
-    service_nginx_port: "8000"
-    service_certbot: true
-    service_nginx: true
-    service_tor: true
-    service_docker_compose: true
-    service_systemd_service: true
+    meta_service_name: "{{ nextcloud_service_name }}"
+    meta_service_fqdn: "cloud.{{ domain }}"
+    meta_service_nginx_port: "8000"
+    meta_service_certbot: true
+    meta_service_nginx: true
+    meta_service_tor: true
+    meta_service_docker_compose: true
+    meta_service_systemd_service: true
 
 - name: Copy nextcloud environment file
   ansible.builtin.template:

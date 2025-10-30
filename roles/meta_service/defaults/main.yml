@@ -1,0 +1,6 @@
+meta_service_docker_compose: false
+meta_service_systemd_service: false
+meta_service_certbot: false
+meta_service_nginx: false
+meta_service_tor: false
+meta_service_iocaine: false

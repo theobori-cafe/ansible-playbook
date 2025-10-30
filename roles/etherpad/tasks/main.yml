@@ -4,16 +4,16 @@
 
 - name: Include service role
   ansible.builtin.include_role:
-    name: "service"
+    name: "meta_service"
   vars:
-    service_name: "{{ etherpad_service_name }}"
-    service_fqdn: "etherpad.{{ domain }}"
-    service_nginx_port: "9001"
-    service_certbot: true
-    service_nginx: true
-    service_tor: true
-    service_docker_compose: true
-    service_systemd_service: true
+    meta_service_name: "{{ etherpad_service_name }}"
+    meta_service_fqdn: "etherpad.{{ domain }}"
+    meta_service_nginx_port: "9001"
+    meta_service_certbot: true
+    meta_service_nginx: true
+    meta_service_tor: true
+    meta_service_docker_compose: true
+    meta_service_systemd_service: true
 
 - name: Copy etherpad environment file
   ansible.builtin.template:

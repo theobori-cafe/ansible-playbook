@@ -4,11 +4,12 @@
 
 - name: Include service role
   ansible.builtin.include_role:
-    name: "service"
+    name: "meta_service"
   vars:
-    service_name: "{{ iocaine_service_name }}"
-    service_docker_compose: true
-    service_systemd_service: true
+    meta_service_name: "{{ iocaine_service_name }}"
+    meta_service_docker_compose: true
+    meta_service_systemd_service: true
+    meta_service_iocaine: false
 
 - name: Create service directory for {{ iocaine_service_name }}
   ansible.builtin.file:
@@ -24,13 +25,18 @@
     mode: "0644"
   loop:
     - {
-      https_url: "https://archive.org/download/GeorgeOrwells1984/1984_djvu.txt",
+      https_url: "https://dn710005.ca.archive.org/0/items/uncletomscabinta0000stow/uncletomscabinta0000stow_djvu.txt",
       filename: "text1.txt",
+      sha256sum: "87014d5820f74cea498de9b7ef41ab672772bd3f988c1768ceb64f4fe7eb8283"
+    }
+    - {
+      https_url: "https://archive.org/download/GeorgeOrwells1984/1984_djvu.txt",
+      filename: "text2.txt",
       sha256sum: "f51d4f4daf320ed91f1fee2b539045eb679eef78ab85ddd5617d50079294f995"
     }
     - {
       https_url: "https://archive.org/download/ost-english-brave_new_world_aldous_huxley/Brave_New_World_Aldous_Huxley_djvu.txt",
-      filename: "text2.txt",
+      filename: "text3.txt",
       sha256sum: "e9691a3bfdf34087b31b3243a784238258a4893653c60a343f83047dfda675c6"
     }
     - {

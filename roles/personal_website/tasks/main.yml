@@ -1,15 +1,16 @@
 - name: Include service role
   ansible.builtin.include_role:
-    name: "service"
+    name: "meta_service"
   vars:
-    service_name: "theoboricafe"
-    service_fqdn: "{{ domain }}"
-    service_nginx_port: "3000"
-    service_docker_compose: true
-    service_systemd_service: true
-    service_certbot: false
-    service_nginx: true
-    service_tor: true
+    meta_service_name: "theoboricafe"
+    meta_service_fqdn: "{{ domain }}"
+    meta_service_nginx_port: "3000"
+    meta_service_docker_compose: true
+    meta_service_systemd_service: true
+    meta_service_certbot: false
+    meta_service_nginx: true
+    meta_service_tor: true
+    meta_service_iocaine: true
 
 - name: Personal website TLS certificate managed by certbot
   ansible.builtin.include_role:

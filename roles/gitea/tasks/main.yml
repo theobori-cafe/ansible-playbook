@@ -4,16 +4,17 @@
 
 - name: Include service role
   ansible.builtin.include_role:
-    name: "service"
+    name: "meta_service"
   vars:
-    service_name: "{{ gitea_service_name }}"
-    service_fqdn: "git.{{ domain }}"
-    service_nginx_port: "3002"
-    service_docker_compose: true
-    service_systemd_service: true
-    service_certbot: true
-    service_nginx: true
-    service_tor: true
+    meta_service_name: "{{ gitea_service_name }}"
+    meta_service_fqdn: "git.{{ domain }}"
+    meta_service_nginx_port: "3002"
+    meta_service_docker_compose: true
+    meta_service_systemd_service: true
+    meta_service_certbot: true
+    meta_service_nginx: true
+    meta_service_tor: true
+    meta_service_iocaine: true
 
 - name: Create the Gitea log directory if not exists
   ansible.builtin.file:
@@ -26,5 +27,5 @@
 - name: Copy Gitea environment file
   ansible.builtin.template:
     src: ".env.j2"
-    dest: "{{ base_dir }}/gitea/.env"
+    dest: "{{ base_dir }}/{{ gitea_service_name }}/.env"
     mode: "0640"

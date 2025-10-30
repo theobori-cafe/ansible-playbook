@@ -1,15 +1,15 @@
 - name: Include service role
   ansible.builtin.include_role:
-    name: "service"
+    name: "meta_service"
   vars:
-    service_name: "tt-rss"
-    service_fqdn: "news.{{ domain }}"
-    service_nginx_port: "8280"
-    service_certbot: true
-    service_nginx: true
-    service_tor: false
-    service_docker_compose: true
-    service_systemd_service: true
+    meta_service_name: "tt-rss"
+    meta_service_fqdn: "news.{{ domain }}"
+    meta_service_nginx_port: "8280"
+    meta_service_certbot: true
+    meta_service_nginx: true
+    meta_service_tor: false
+    meta_service_docker_compose: true
+    meta_service_systemd_service: true
 
 - name: Create the tt-rss config.d directory if not exists
   ansible.builtin.file:

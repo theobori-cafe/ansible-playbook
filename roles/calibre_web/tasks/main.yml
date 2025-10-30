@@ -1,12 +1,12 @@
 - name: Include service role
   ansible.builtin.include_role:
-    name: "service"
+    name: "meta_service"
   vars:
-    service_name: "calibre-web"
-    service_fqdn: "books.{{ domain }}"
-    service_nginx_port: "8083"
-    service_certbot: true
-    service_nginx: true
-    service_tor: true
-    service_docker_compose: true
-    service_systemd_service: true
+    meta_service_name: "calibre-web"
+    meta_service_fqdn: "books.{{ domain }}"
+    meta_service_nginx_port: "8083"
+    meta_service_certbot: true
+    meta_service_nginx: true
+    meta_service_tor: true
+    meta_service_docker_compose: true
+    meta_service_systemd_service: true

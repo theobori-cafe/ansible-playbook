@@ -1,0 +1,116 @@
+- name: "Create service directory for {{ meta_service_name }}"
+  ansible.builtin.file:
+    path: "{{ base_dir }}/{{ meta_service_name }}"
+    state: directory
+    mode: "0755"
+  when: meta_service_docker_compose
+
+- name: "Copy docker compose file for {{ meta_service_name }}"
+  ansible.builtin.copy:
+    src: "docker-compose.yml"
+    dest: "{{ base_dir }}/{{ meta_service_name }}/docker-compose.yml"
+    mode: "0644"
+  when: meta_service_docker_compose
+
+- name: "Create systemd service for {{ meta_service_name }}"
+  ansible.builtin.copy:
+    dest: "/etc/systemd/system/{{ meta_service_name }}.service"
+    content: |
+      [Unit]
+      Description={{ meta_service_name }} service
+      Requires=docker.service
+      After=docker.service
+
+      [Service]
+      Restart=on-failure
+
+      WorkingDirectory={{ base_dir }}/{{ meta_service_name }}
+
+      ExecStart=docker compose up --build
+      ExecStop=docker compose down --remove-orphans
+
+      [Install]
+      WantedBy=multi-user.target
+    mode: "0644"
+  when: meta_service_systemd_service
+
+- name: "Create TLS certificate managed by certbot for {{ meta_service_name }}"
+  ansible.builtin.include_role:
+    name: geerlingguy.certbot
+  vars:
+    certbot_install_method: package
+    certbot_auto_renew: true
+    certbot_auto_renew_user: "{{ ansible_user | default(lookup('env', 'USER')) }}"
+    certbot_auto_renew_hour: "3"
+    certbot_auto_renew_minute: "30"
+    certbot_create_if_missing: true
+    certbot_admin_email: "{{ certbot_email }}"
+    certbot_use_staging: false
+    certbot_certs:
+      - domains:
+          - "{{ meta_service_fqdn }}"
+    certbot_create_extra_args: ""
+
+  when: meta_service_certbot
+
+- name: "Create NGINX configuration files for {{ meta_service_name }}"
+  ansible.builtin.template:
+    src: nginx.j2
+    dest: "/etc/nginx/sites-available/{{ meta_service_fqdn }}"
+    mode: "0644"
+  vars:
+    server_name: "{{ meta_service_fqdn }}"
+    server_port: "{{ meta_service_nginx_port }}"
+  when: meta_service_nginx
+
+- name: "Create NGINX symlink for {{ meta_service_name }}"
+  ansible.builtin.file:
+    src: "/etc/nginx/sites-available/{{ meta_service_fqdn }}"
+    dest: "/etc/nginx/sites-enabled/{{ meta_service_fqdn }}"
+    state: link
+    force: true
+    follow: false
+    mode: "0644"
+  when: meta_service_nginx
+
+- name: Store the Tor hostname
+  ansible.builtin.shell: |
+    cat /var/lib/tor/{{ domain }}/hostname
+  register: meta_service_tor_hostname
+  when: meta_service_tor
+
+- name: Display the Tor hostname
+  ansible.builtin.debug:
+    msg: "{{ meta_service_tor_hostname.stdout }}"
+  when:
+    - meta_service_tor
+    - meta_service_tor_hostname is defined
+
+- name: "Configure NGINX for Tor hidden services (subdomains) for {{ meta_service_name }}"
+  ansible.builtin.shell: |
+    grep "listen {{ tor_unix_socket }};" \
+      "/etc/nginx/sites-available/{{ meta_service_fqdn }}" && exit 0
+
+    {% if meta_service_fqdn == domain %}
+    sed -i "/etc/nginx/sites-available/{{ meta_service_fqdn }}" \
+      -e "/^server {/a \  listen {{ tor_unix_socket }};" \
+      -e "s/server_name www.{{ meta_service_fqdn }} {{ meta_service_fqdn }};/\
+    server_name www.{{ meta_service_fqdn }} {{ meta_service_fqdn }} \
+    {{ meta_service_tor_hostname.stdout }};/"
+        {% else %}
+        sed -i "/etc/nginx/sites-available/{{ meta_service_fqdn }}" \
+          -e "/^server {/a \  listen {{ tor_unix_socket }};" \
+          -e "s/server_name {{ meta_service_fqdn }};/\
+    server_name {{ meta_service_fqdn }} \
+    {{ meta_service_fqdn | split('.') | first }}.{{ meta_service_tor_hostname.stdout }};/"
+        {% endif %}
+  when:
+    - meta_service_tor
+    - meta_service_tor_hostname is defined
+
+- name: Restart service NGINX
+  ansible.builtin.service:
+    name: nginx
+    state: restarted
+    enabled: true
+  when: meta_service_nginx
