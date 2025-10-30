@@ -1,3 +1,6 @@
+# Gitea database root password (should be encrypted)
 gitea_db_root_password: "gitea_db_root_password"
+# Gitea database user (should be encrypted)
 gitea_db_user: "gitea_db_user"
+# Gitea database password (should be encrypted)
 gitea_db_password: "gitea_db_password"

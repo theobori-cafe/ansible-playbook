@@ -1,4 +1,8 @@
+# Nextcloud database user (should be encrypted)
 nextcloud_db_user: "nextcloud_db_user"
+# Nextcloud database password (should be encrypted)
 nextcloud_db_password: "nextcloud_db_password"
+# Nextcloud database root password (should be encrypted)
 nextcloud_db_root_password: "nextcloud_db_root_password"
+# Nextcloud Redis password (should be encrypted)
 nextcloud_redis_password: "nextcloud_redis_password"

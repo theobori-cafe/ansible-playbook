@@ -1,8 +1,12 @@
+- name: Set task locally the Linkstack service name fact (used as variable)
+  ansible.builtin.set_fact:
+    linkstack_service_name: "linkstack"
+
 - name: Include service role
   ansible.builtin.include_role:
     name: "service"
   vars:
-    service_name: "linkstack"
+    service_name: "{{ linkstack_service_name }}"
     service_fqdn: "links.{{ domain }}"
     service_nginx_port: "8880"
     service_certbot: true
@@ -14,5 +18,5 @@
 - name: Copy LinkStack environment file
   ansible.builtin.template:
     src: ".env.j2"
-    dest: "{{ base_dir }}/linkstack/.env"
+    dest: "{{ base_dir }}/{{ linkstack_service_name }}/.env"
     mode: "0640"

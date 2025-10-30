@@ -1,1 +1,2 @@
+# SSP secret key use to encrypt/decrypt the token (should be encrypted)
 ssp_secretkey: "ssp_secretkey"

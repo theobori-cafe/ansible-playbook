@@ -1,7 +1,5 @@
-version: "3.8"
-
 services:
-  linkstack:
+  ascii_facemaker:
     image: theobori/ascii-facemaker:1.0
     container_name: ascii-facemaker
     ports:

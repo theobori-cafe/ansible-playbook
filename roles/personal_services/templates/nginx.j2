@@ -3,6 +3,8 @@ server {
   server_name {{ server_name }};
   
   include ssl_params;
+  include /etc/nginx/snippets/block_bots.conf;
+
   ssl_certificate /etc/letsencrypt/live/{{ server_name }}/fullchain.pem;
   ssl_certificate_key /etc/letsencrypt/live/{{ server_name }}/privkey.pem;
   

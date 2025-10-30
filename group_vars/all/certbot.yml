@@ -1,1 +1,2 @@
+# Email address used for certbot certificates (letsencrypt)
 certbot_email: nagi@tilde.team

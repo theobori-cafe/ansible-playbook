@@ -1,8 +1,12 @@
+- name: Set task locally the Nextcloud service name fact (used as variable)
+  ansible.builtin.set_fact:
+    nextcloud_service_name: "nextcloud"
+
 - name: Include service role
   ansible.builtin.include_role:
     name: "service"
   vars:
-    service_name: "nextcloud"
+    service_name: "{{ nextcloud_service_name }}"
     service_fqdn: "cloud.{{ domain }}"
     service_nginx_port: "8000"
     service_certbot: true
@@ -14,12 +18,12 @@
 - name: Copy nextcloud environment file
   ansible.builtin.template:
     src: ".env.j2"
-    dest: "{{ base_dir }}/nextcloud/.env"
+    dest: "{{ base_dir }}/{{ nextcloud_service_name }}/.env"
     mode: "0640"
 
 - name: Create the Nextcloud log directory if not exists
   ansible.builtin.file:
-    path: "{{ base_dir }}/nextcloud/data"
+    path: "{{ base_dir }}/{{ nextcloud_service_name }}/data"
     owner: 33
     group: 33
     state: directory

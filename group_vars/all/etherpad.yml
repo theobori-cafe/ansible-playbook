@@ -1,3 +1,6 @@
+# Etherpad database username (should be encrypted)
 etherpad_db_user: "etherpad_db_user"
+# Etherpad database password (should be encrypted)
 etherpad_db_password: "etherpad_db_password"
+# Etherpad admin password (should be encrypted)
 etherpad_admin_password: "etherpad_admin_password"

@@ -1,4 +1,8 @@
+# Mailer (SMTP) user (should be encrypted)
 mailer_user: "mailer_user"
+# Mailer (SMTP) password (should be encrypted)
 mailer_password: "mailer_password"
+# Mailer (SMTP) host (should be encrypted)
 mailer_host: "mailer_host"
+# Mailer (SMTP) source email address (should be encrypted)
 mailer_from: "mailer_from"

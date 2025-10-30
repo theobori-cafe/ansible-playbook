@@ -9,5 +9,6 @@ alias k="kubectl"
 
 set -g PATH "$PATH:/$HOME/.local/bin"
 set -g GPG_TTY (tty)
+set -g TERM xterm-256color
 
 set -g theme_color_scheme dracula

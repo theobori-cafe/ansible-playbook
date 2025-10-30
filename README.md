@@ -4,37 +4,29 @@
 
 This GitHub repository contains Ansible resources to deploy all of my services on a Debian system.
 
-## Recommendations for launching deployment
+## Getting started
 
-1. Install the dependencies 
-   - ansible
-   - ansible galaxy dependencies
+To use this Ansible playbook, you will need the Ansible roles, which can be downloaded from Ansible Galaxy. You can run the following command line.
 
 ```sh
 ansible-galaxy install -r requirements.yml
 ```
 
-2. Configure a vault password (a filepass is better)
-3. Configure an inventory
-4. Configure a playbook
-   1. Inventory (if needed)
-   2. Replace variables
-   3. Encrypt the needed ones
-5. Run the playbook
+We recommend setting up an inventory and replacing the variables available in the files in [group_vars/all](/group_vars/all). Below is an example of launching the Ansible playbook from the project root with certain tags selected.
 
 ```sh
 ansible-playbook \
    -i inventory.yml \
-   --vault-password-file .vault_pass \
-   main.yml
+   -e my_variables.yml \
+   -t gitea,searxng main.yml
 ```
 
 Some services are not restarted at runtime on purpose, because they need administrator configuration like `Uptime-Kuma` or `Nextcloud`. If you want to access them, you should do a SSH bridge with OpenSSH like below.
 
 ```sh
 ssh \
-   -L ssh_local_port:127.0.0.1:ssh_remote_port -N \
-   -f ssh_user@ssh_server
+   -L ssh_local_port:127.0.0.1:ssh_remote_port \
+   -N -f ssh_user@ssh_server
 ```
 
 ## The knockd risks
@@ -49,8 +41,7 @@ And then add a rule for `ufw` that allow you SSH connections.
 
 ## Roles and variables
 
-### Roles
-
+Ci-dessous un aperçu des roles disponible dans le playbook Ansible.
 - **`nickjj.docker`**: Setup and configure Docker + docker-compose.
 - **`weareinteractive.ufw`**: Setup the firewall and configure it.
 - **`base`**: Install basics needed packages for the other roles.
@@ -64,65 +55,6 @@ And then add a rule for `ufw` that allow you SSH connections.
 - **`service roles`**: Each service role like **`gitea`** is based on the **`service`** role.
 - **`monitoring`**: Setup the monitoring stack based on Prometheus and Grafana.
 
-### Variables
-
-#### SSH
-- **`ssh_identity_key_path`**: SSH public key used to auth.
-- **`ssh_port`**: Change the default SSH port.
-
-#### Port knocking
-- **`knockd_open_ssh_seq`**: Knockd open SSH (should be encrypted).
-- **`knockd_close_ssh_seq`**: knockd close SSH (should be encrypted).
-- **`knockd_tmp_open_ssh_seq`**: Temporary open SSH (should be encrypted).
-- **`knockd_opts`**: knockd CLI arguments used by the service.
-
-#### Domain
-- **`domain`**: The server domain, must be formatted as "domain.tld".
-
-#### Etherpad
-- **`etherpad_db_user`**: Etherpad database username (should be encrypted).
-- **`etherpad_db_password`**: Etherpad database password (should be encrypted).
-- **`etherpad_admin_password`**: Etherpad admin password (should be encrypted).
-
-#### Tor
-- **`tor_unix_socket`**: Tor UNIX socket path
-
-#### LDAP
-- **`ldap_admin_password`**: OpenLDAP administrator password (should be encrypted).
-- **`ldap_auth_services_basedn`**: OpenLDAP base DN (should be encrypted).
-- **`ldap_auth_services_binddn`**: OpenLDAP bind DN (should be encrypted).
-- **`ldap_auth_services_bindpw`**: OpenLDAP bind password (should be encrypted).
-- **`ldap_auth_services_login_attrib`**: OpenLDAP login attribute cn.
-
-#### Nextcloud
-- **`nextcloud_db_user`**: Nextcloud database user (should be encrypted).
-- **`nextcloud_db_password`**: Nextcloud database password (should be encrypted).
-- **`nextcloud_db_root_password`**: Nextcloud database root password (should be encrypted).
-- **`nextcloud_redis_password`**: Nextcloud Redis password (should be encrypted).
-
-#### Tiny Tiny RSS
-- **`ttrss_db_username`**: Tiny Tiny RSS database user (should be encrypted).
-- **`ttrss_db_password`**: Tiny Tiny RSS database password (should be encrypted).
-
-#### Gitea
-- **`gitea_db_root_password`**: Gitea database root password (should be encrypted).
-- **`gitea_db_user`**: Gitea database user (should be encrypted).
-- **`gitea_db_password`**: Gitea database password (should be encrypted).
-  
-#### Mailer
-- **`mailer_user`**: Mailer (SMTP) user (should be encrypted).
-- **`mailer_password`**: Mailer (SMTP) password (should be encrypted).
-- **`mailer_host`**: Mailer (SMTP) host (should be encrypted).
-- **`mailer_from`**: Mailer (SMTP) source email address (should be encrypted).
-
-#### Self Service Password
-- **`ssp_secretkey`**: SSP secret key use to encrypt/decrypt the token (should be encrypted).
-
-#### Certbot
-- **`certbot_email`**: Email address used for certbot certificates (letsencrypt).
-
-#### Directory
-- **`base_dir`**: Base directory for each service.
 
 ## Potential improvements
 

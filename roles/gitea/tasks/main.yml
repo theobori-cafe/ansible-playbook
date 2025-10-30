@@ -1,8 +1,12 @@
+- name: Set task locally the Gitea service name fact (used as variable)
+  ansible.builtin.set_fact:
+    gitea_service_name: "gitea"
+
 - name: Include service role
   ansible.builtin.include_role:
     name: "service"
   vars:
-    service_name: "gitea"
+    service_name: "{{ gitea_service_name }}"
     service_fqdn: "git.{{ domain }}"
     service_nginx_port: "3002"
     service_docker_compose: true
@@ -13,8 +17,8 @@
 
 - name: Create the Gitea log directory if not exists
   ansible.builtin.file:
-    path: /usr/local/services/gitea/log
-    state: directory
+    path: "{{ base_dir }}/{{ gitea_service_name }}/log"
+    state: "directory"
     owner: "1000"
     group: "1000"
     mode: "0755"

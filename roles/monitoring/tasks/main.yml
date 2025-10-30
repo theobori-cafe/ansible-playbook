@@ -1,13 +1,17 @@
+- name: Set task locally the monitoring service name fact (used as variable)
+  ansible.builtin.set_fact:
+    monitoring_service_name: "monitoring"
+
 - name: Include service role
   ansible.builtin.include_role:
     name: "service"
   vars:
-    service_name: "monitoring"
+    service_name: "{{ monitoring_service_name }}"
     service_docker_compose: true
     service_systemd_service: true
 
 - name: Copy Prometheus configuration file
   ansible.builtin.copy:
     src: "prometheus.yml"
-    dest: "{{ base_dir }}/monitoring/prometheus.yml"
+    dest: "{{ base_dir }}/{{ monitoring_service_name }}/prometheus.yml"
     mode: "0644"

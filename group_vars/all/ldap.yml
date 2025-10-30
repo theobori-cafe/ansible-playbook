@@ -1,5 +1,10 @@
+# OpenLDAP administrator password (should be encrypted)
 ldap_admin_password: "ldap_admin_password"
+# OpenLDAP base DN (should be encrypted)
 ldap_auth_services_basedn: "ldap_auth_services_basedn"
+# OpenLDAP bind DN (should be encrypted)
 ldap_auth_services_binddn: "ldap_auth_services_binddn"
+# OpenLDAP bind password (should be encrypted)
 ldap_auth_services_bindpw: "ldap_auth_services_bindpw"
+# OpenLDAP login attribute cn
 ldap_auth_services_login_attrib: "ldap_auth_services_login_attrib"

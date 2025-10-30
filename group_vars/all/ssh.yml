@@ -1,2 +1,4 @@
+# SSH public key used to auth
 ssh_identity_key_path: /home/nagi/.ssh/id_rsa.pub
+# Change the default SSH port
 ssh_port: 58372

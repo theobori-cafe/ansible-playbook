@@ -1,2 +1,4 @@
 dependencies:
   - role: nginx
+
+allow_duplicates: false

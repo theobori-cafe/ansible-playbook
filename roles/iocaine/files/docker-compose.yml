@@ -1,0 +1,17 @@
+services:
+  iocaine:
+    image: git.madhouse-project.org/iocaine/iocaine:2
+    container_name: iocaine
+    ports:
+      - "127.0.0.1:42069:42069"
+      - "127.0.0.1:42070:42070"
+    volumes:
+      - "./data:/data"
+    environment:
+      - IOCAINE__SERVER__BIND="0.0.0.0:42069"
+      - IOCAINE__SOURCES__WORDS="/data/words.txt"
+      - IOCAINE__SOURCES__MARKOV=["/data/text1.txt", "/data/text2.txt"]
+      - IOCAINE__METRICS__ENABLE=true
+      - IOCAINE__METRICS__BIND="0.0.0.0:42070"
+      - IOCAINE__METRICS__LABELS=["Host","UserAgent"]
+    restart: unless-stopped

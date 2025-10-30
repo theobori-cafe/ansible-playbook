@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   ssp-app:
     image: tiredofit/self-service-password

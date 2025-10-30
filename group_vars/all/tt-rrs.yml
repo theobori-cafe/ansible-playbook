@@ -1,2 +1,4 @@
+# Tiny Tiny RSS database user (should be encrypted)
 ttrss_db_username: "ttrss_db_username"
+# Tiny Tiny RSS database password (should be encrypted)
 ttrss_db_password: "ttrss_db_password"

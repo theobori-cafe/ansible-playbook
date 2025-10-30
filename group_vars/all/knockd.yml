@@ -1,4 +1,8 @@
+# Knockd open SSH (should be encrypted)
 knockd_open_ssh_seq: "knockd_open_ssh_seq"
+# Temporary open SSH (should be encrypted)
 knockd_tmp_open_ssh_seq: "knockd_tmp_open_ssh_seq"
+# knockd close SSH (should be encrypted)
 knockd_close_ssh_seq: "knockd_close_ssh_seq"
+# knockd CLI arguments used by the service
 knockd_opts: "-i eth0"

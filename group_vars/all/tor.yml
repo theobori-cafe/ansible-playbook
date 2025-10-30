@@ -1,1 +1,2 @@
+# Tor UNIX socket path
 tor_unix_socket: unix:/var/run/{{ domain }}.sock
