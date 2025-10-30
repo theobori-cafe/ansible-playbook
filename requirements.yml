@@ -7,4 +7,4 @@ roles:
     name: vitalk.secure-ssh
   - src: https://github.com/geerlingguy/ansible-role-certbot.git
     name: geerlingguy.certbot
-    version: 5.1.1
+    version: 5.4.1

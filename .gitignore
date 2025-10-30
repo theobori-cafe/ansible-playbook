@@ -2,6 +2,7 @@ inventory.yml
 .vault_pass
 
 my_vars.yml
+my_variables.yml
 my_playbook.yml
 
 .vscode
