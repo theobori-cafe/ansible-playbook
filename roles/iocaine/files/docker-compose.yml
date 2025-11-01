@@ -15,3 +15,9 @@ services:
       - IOCAINE__METRICS__BIND="0.0.0.0:42070"
       - IOCAINE__METRICS__LABELS=["Host","UserAgent"]
     restart: unless-stopped
+    networks:
+      - monitoring_prometheus_net
+
+networks:
+  monitoring_prometheus_net:
+    external: true

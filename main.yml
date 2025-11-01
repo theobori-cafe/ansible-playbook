@@ -71,6 +71,9 @@
 
     - role: tor
       tags: tor
+    
+    - role: shell
+      tags: shell
 
     - role: calibre_web
       tags: calibre_web
@@ -80,6 +83,9 @@
 
     - role: etherpad
       tags: etherpad
+
+    - role: monitoring
+      tags: monitoring
 
     - role: gitea
       tags: gitea
@@ -113,9 +119,6 @@
 
     - role: uptime_kuma
       tags: uptime_kuma
-
-    - role: monitoring
-      tags: monitoring
 
     - role: linkstack
       tags: linkstack

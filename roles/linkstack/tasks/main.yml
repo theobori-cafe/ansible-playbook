@@ -14,6 +14,7 @@
     meta_service_tor: true
     meta_service_docker_compose: true
     meta_service_systemd_service: true
+    meta_service_iocaine: true
 
 - name: Copy LinkStack environment file
   ansible.builtin.template:
