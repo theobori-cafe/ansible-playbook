@@ -102,9 +102,6 @@
     - role: private_bin
       tags: private_bin
 
-    - role: proxitok
-      tags: proxitok
-
     - role: searxng
       tags: searxng
 
