@@ -1,7 +1,7 @@
 server {
   include listen-443;
   server_name www.{{ server_name }} {{ server_name }};
-  
+
   include ssl_params;
   include /etc/nginx/snippets/block_bots.conf;
 
@@ -17,7 +17,7 @@ server {
   add_header Referrer-Policy "strict-origin";
   add_header Permissions-Policy "microphone=(), geolocation=()";
   add_header X-Frame-Options "DENY";
-  add_header Content-Security-Policy "default-src 'none'; font-src 'self'; style-src 'self'; media-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'; style-src-elem 'self' 'nonce-$ssl_session_id'; img-src 'self' https:; script-src 'self' 'unsafe-hashes' 'sha256-2daR3BDHUgNt2bWp/u+3CNDJtsIDrpz+22+QPnNNS5c='; connect-src 'self'";
+  add_header Content-Security-Policy "default-src 'none'; style-src-attr 'self' 'unsafe-hashes' 'sha256-/EQRfBQg0w3OeeJM5bhc3eFqz/fNyaMnrUofU78JVXg='; font-src 'self'; style-src 'self'; media-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'; style-src-elem 'self' 'nonce-$ssl_session_id'; img-src 'self' https:; script-src 'self' 'unsafe-hashes' 'sha256-2daR3BDHUgNt2bWp/u+3CNDJtsIDrpz+22+QPnNNS5c='; connect-src 'self'";
 
   location / {
     include proxy_params;
