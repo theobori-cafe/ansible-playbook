@@ -17,7 +17,7 @@ We recommend setting up an inventory and replacing the variables available in th
 ```sh
 ansible-playbook \
    -i inventory.yml \
-   -e my_variables.yml \
+   -e @my_variables.yml \
    -t gitea,searxng main.yml
 ```
 
